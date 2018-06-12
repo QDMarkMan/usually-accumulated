@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo Document</title>
+</head>
+<body>
+    <div id="demo">
+        <h1>Hello ES6</h1>
+        <div class="demo-child"></div>
+    </div>
+    <!-- 下面的DOM是为demo准备的DOM -->
+    <!-- target和currentTarget的区别 -->
+    <div id="outer" style="background:#099">
+        click outer
+        <p id="inner" style="background:#9C0">click inner</p>
+        <br>
+    </div>
+    <!-- 事件委托 -->
+    <div id="box">
+        <input type="button" id="add" value="添加" />
+        <input type="button" id="remove" value="删除" />
+        <input type="button" id="move" value="移动" />
+        <input type="button" id="select" value="选择" />
+    </div>
+    <!-- 为创建的DOM添加事件委托 -->
+    <input type="button" name="" id="btn" value="添加" />
+    <ul id="ul1">
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+        <li>444</li>
+    </ul>
+    <!-- 闭包例子 -->
+    <a href="#">点我测试闭包</a>
+    <a href="#">点我测试闭包</a>
+    <a href="#">点我测试闭包</a>
+    <a href="#">点我测试闭包</a>
+
+    <div id="object">
+        <input type="text" name="" id="model">
+        <p id="view"></p>
+    </div>
+    <!-- String 容器 -->
+    <div id="flex">
+        
+    </div>
+
+    <!-- 测试flex -->
+    <div id="dad">
+        <div class="son"></div>
+        <div class="son"></div>
+        <div class="son"></div>
+    </div>
+    <div class="align-items dad-baseline">
+        <div class="son1"></div>
+        <div class="son2"></div>
+        <div class="son3"></div>
+    </div>
+    <div class="align-items dad-stretch">
+        <div class="son1"></div>
+        <div class="son2"></div>
+        <div class="son3"></div>
+    </div>
+
+    <section>
+        <div class="left"></div>
+        <div class="middle"></div>
+        <div class="right"></div>
+    </section>
+</body>
+<!-- 开发服务器上的地址 -->
+<script src="./temp/bundle.js"></script>
+</html>

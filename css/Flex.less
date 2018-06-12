@@ -1,0 +1,289 @@
+/*
+ * @Author: etf 
+ * @Date: 2018-04-03 10:43:00 
+ * @Last Modified by: etf
+ * @Last Modified time: 2018-04-03 14:21:19
+  flex 布局 参考掘金：https://juejin.im/post/58e3a5a0a0bb9f0069fc16bb
+ */
+/* 
+  问题都开始于：怎么样通过css简单而优雅的实现水平垂直同时居中
+
+  在网页布局没有进入 CSS 的时代，排版几乎是通过 table 元素实现的，在 table 的单元格里可以方便的使用 align、valign 来实现水平和垂直方向的对齐，
+  随着 Web 语义化的流行，这些写法逐渐淡出了视野，
+  CSS 标准为我们提供了 3 种布局方式：标准文档流、浮动布局和定位布局。这几种方式的搭配使用可以轻松搞定 PC 端页面的常见需求，
+  比如实现水平居中可以使用 margin: 0 auto，实现水平垂直同时居中可以如下设置：
+*/  
+//常用的实现水平垂直居中1
+.dad-nowidth{
+  position: relative;
+}
+.son-nowidth{
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+//常用的实现水平垂直居中2 子元素大小确定
+.dad-width{
+  position: relative;
+}
+.son-width{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+/*
+然而，这些写法都存在一些缺陷：缺少语义并且不够灵活。我们需要的是通过 1 个属性就能优雅的实现子元素居中或均匀分布，甚至可以随着窗口缩放自动适应。
+在这样的需求下，CSS 的第 4 种布局方式诞生了，这就是我们今天要重点介绍的 flex 布局。
+*/
+//使用flex实现水平垂直居中
+#flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*
+  flex的核心概念就是容器和轴
+  容器：包括外层父容器和内层的子容器
+  轴：主轴和交叉轴
+  flex属性涉及到12个css属性 父容器子容器各6个，常用的只有4个
+*/
+// 1：容器 父容器可以统一设置子容器的排列方式，子容器也可以单独设置自身的排列方式，如果两者同时设置，以子容器的设置为准。 只是css的属性不同而已
+
+/* 
+  1.1父容器
+    ⭐⭐⭐⭐⭐
+    设置子容器沿主轴排列 justify-content 该属性用于定义如何沿着主轴方向排列子容器。 
+    位置排列：flex-start 起始端对其 从左到右对其 /  flex-end：末尾段对齐 从右到左 / center：居中对齐
+    分布排列：space-around 子容器沿主轴均匀分布，位于首尾两端的子容器到父容器的距离是子容器间距的一半。 
+             space-between：子容器沿主轴均匀分布，位于首尾两端的子容器与父容器相切。
+*/
+#dad{
+  display: flex;
+  justify-content: space-between;
+  .son{
+    width: 100px;
+    height: 80px;
+    background-color: red;
+  }
+  
+}
+/* 
+      父容器中的子容器设置：主要是设置子容器如何沿交叉轴排列 交叉轴指的是垂直方向
+      align-items 属性用于定义如何沿着交叉轴方向分配子容器的间距
+      位置排列：flex-start：起始端对齐 / flex-end：末尾段对齐 / center 居中对齐
+      基线排列：baseline：基线对齐，这里的 baseline 默认是指首行文字，即 first baseline，所有子容器向基线对齐，交叉轴起点到元素基线距离最大的子容器将会与交叉轴起始端相切以确定基线。
+      拉伸排列：stretch ： 子容器沿交叉轴方向的尺寸拉伸至与父容器一致。 就是垂直方向上和父元素拉伸为一致 就相当于给了个百分之百的高度 但是样式会被子容器中的样式覆盖 这样设置了自然平齐就不要设置高度了
+*/
+
+.align-items{
+  .son1{
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+  }
+  .son2{
+    width: 80px;
+    height: 80px;
+    background-color: red;
+  }
+  .son3{
+    width: 120px;
+    height: 120px;
+    background-color: yellow
+  }
+}
+//对其方向
+.dad-baseline{
+  display: flex;
+  align-items: baseline;
+}
+.dad-stretch{
+  display: flex;
+  height: 150px;
+  align-items: stretch;
+  margin-top: 10px;
+}
+
+/* 
+  1.2子容器  
+    弹性：flex：在主轴上如何伸缩 子容器是有弹性的 它们会自动填充剩余空间 伸缩比例由flex属性确定
+     flex 的值可以是无单位数字（如：1, 2, 3），也可以是有单位数字（如：15px，30px，60px），还可以是 none 关键字。
+    子容器会按照 flex 定义的尺寸比例自动伸缩，如果取值为 none 则不伸缩。
+
+    flex有三个值可以设置：flex：flex-grow | flex-shink | flex-basis 一个值两个值三个值都可以 通常一个值就可以满足需求
+    
+
+    单独设置子容器如何沿着交叉轴排列：align-self
+    这个属性是设置在子容器上的，和父容器中的align-items作用是一样的 取值也是一样的
+    align-self：flex-start：起始端对齐 / flex-end：末尾段对齐 / center 居中对齐 / baselin 基线对齐 / stretch 拉伸排列
+    在子容器上设置的align-self将会覆盖父容器中的align-items
+*/
+
+
+
+// 2 轴：轴 包括 主轴 和 交叉轴，我们知道 justify-content 属性决定子容器沿主轴的排列方式，align-items 属性决定子容器沿着交叉轴的排列方式。那么轴本身又是怎样确定的呢？在 flex 布局中，flex-direction 属性决定主轴的方向，交叉轴的方向由主轴确定。
+
+//主轴：开始端由flex-start表示，结束由flex-end表示 不同主轴对应的的起始端，末尾端的位置也不同
+//flex-direction: row 向右 | column 向左 |  row-reverse 向左 | column-reverse 向上
+
+// 主轴旋转90°得到了交叉轴
+
+
+/* 
+  父容器
+  父容器中的换行方式
+  flex-wrap：nowrap 不换行 | wrap 换行 | wrap-revers 逆序换行：沿着交叉轴的反方向换行 注意是沿着交叉轴
+
+  轴向和换行组合设置：
+  flex-flow：flow即流向，也就是子容器沿着哪个方向流动，流动到终点是否允许换行flex-flow:row wrap   
+      flex-flow 是一个复合属性，相当于 flex-direction 与 flex-wrap 的组合，可选的取值如下：
+
+      row、column 等，可单独设置主轴方向
+
+      wrap、nowrap 等，可单独设置换行方式
+
+      row nowrap、column wrap 等，也可两者同时设置
+
+
+    多行沿着交叉轴对其的方式
+    当子容器有多行的时候，设置行与行之间的对齐方式
+    
+    align-content：这个值和justify-content相同
+*/
+
+
+/* 
+  子容器
+    设置基准大小 
+    flex-basis 表示在不伸缩的情况下子容器的原始尺寸。主轴为横向时代表宽度，主轴为纵向时代表高度。
+
+    设置扩展比例
+    lex-grow  子容器弹性伸展的比例。如图，剩余空间按 1:2 的比例分配给子容器。
+
+    设置收缩比例
+    flex-shrink 子容器弹性收缩的比例
+
+    设置排序
+    order 可以修改html中的默认排序 默认值为0 数值越小越靠前
+*/
+// flexgrow详解
+// 想要实现三栏等高布局，且两边的侧栏宽度固定而中间一栏占用剩余的空间，如下代码就足够了：
+section{
+  display: flex;
+  .left,.right{
+    width: 100px;
+    height: 100px;
+  }
+  .left{
+    background-color:pink;
+  }
+  .right{
+    background-color:yellow;
+  }
+  .middle{
+    flex-grow: 1; // middle部分会自动计算宽度
+  }
+}
+// 上面 demo 中最值得注意的是 .content 元素的 flex-grow 属性，设置为 1 它就可以占满水平剩余空间。这也是本文的重点：讲清 flex-grow 与 flex-shrink 属性的详细计算方式。
+/* 
+  ⭐⭐⭐⭐⭐
+  flex-grow 属性决定了父元素在空间分配方向上还有剩余空间时，如何分配这些剩余空间。其值为一个权重（也称扩张因子），
+  默认为 0（纯数值，无单位），剩余空间将会按照这个权重来分配。
+
+  比如剩余空间为 x，三个元素的 flex-grow 分别为 a，b，c。设 sum 为 a + b + c。那么三个元素将得到剩余空间分别是
+   x * a / sum, x * b / sum, x * c / sum，是为权重也。权重就是按照元素设置的flex-grow的值的和的一部分
+    举个例子：
+
+  父元素宽度 500px，三个子元素的 width 分别为 100px，150px，100px。
+
+  于是剩余空间为 150px
+
+  三个元素的 flex-grow 分别是 1，2，3，于是 sum 为 6
+  则三个元素所得到的多余空间分别是：
+
+  150 * 1 / 6 = 25px
+  150 * 2 / 6 = 50px
+  150 * 3 / 6 = 75px
+  三个元素最终的宽度分别为 125px，200px，175px。
+
+  100px + 25px = 125px
+  150px + 50px = 200px
+  100px + 75px = 175px
+
+  当所有元素的 flex-grow 之和小于 1 的时候（注意是 1，也就是说每个元素的 flex-grow 都是一个小数如 0.2 这样的），上面式子中的 sum 将会使用 1 来参与计算，而不论它们的和是多少。也就是说，当所有的元素的 flex-grow 之和小于 1 的时候，剩余空间不会全部分配给各个元素。
+
+  实际上用来分配的空间是 sum(flex-grow) / 1 * 剩余空间，这些用来分配的空间依然是按 flex-grow 的比例来分配。
+
+
+  另外，flex-grow 还会受到 max-width 的影响。如果最终 grow 后的结果大于 max-width 指定的值，max-width 的值将会优先使用。
+  同样会导致父元素有部分剩余空间没有分配。
+  
+*/
+
+/* 
+flex-shrink 的计算方式
+
+那么既然可以在空间有多余时把多余空间分配给各个子元素，当然也可以在空间不够时让各个子元素收缩以适应有限的空间了。
+这就是 flex-shrink 属性的作用。
+
+flex-shrink 属性定义空间不够时各个元素如何收缩。其值默认为 1。很多文章对此基本是一笔带过：“flex-shrink 属性定义了元素的收缩系数”，根本就不说它具体是怎么计算的。
+flex-shrink 定义的仅仅只是元素宽度变小的一个权重分量。
+每个元素具体收缩多少，还有另一个重要因素，即它本身的宽度。
+
+举个例子：
+
+父元素 500px。三个子元素分别设置为 150px，200px，300px。
+
+三个子元素的 flex-shrink 的值分别为 1，2，3。
+
+首先，计算子元素溢出多少：150 + 200 + 300 - 500 = -150px。
+
+那这 -150px 将由三个元素的分别收缩一定的量来弥补。
+
+具体的计算方式为：每个元素收缩的权重为其 flex-shrink 乘以其宽度。
+
+所以总权重为 1 * 150 + 2 * 200 + 3 * 300 = 1450
+
+三个元素分别收缩：
+
+150 * 1(flex-shrink) * 150(width) / 1450 = -15.5
+150 * 2(flex-shrink) * 200(width) / 1450 = -41.4
+150 * 3(flex-shrink) * 300(width) / 1450 = -93.1
+三个元素的最终宽度分别为：
+
+150 - 15.5 = 134.5
+200 - 41.4 = 158.6
+300 - 93.1 = 206.9
+
+
+
+同样，当所有元素的 flex-shrink 之和小于 1 时，计算方式也会有所不同：
+
+此时，并不会收缩所有的空间，而只会收缩 flex-shrink 之和相对于 1 的比例的空间。
+
+还是上面的例子，但是 flex-shrink 分别改为 0.1，0.2，0.3。
+
+于是总权重为 145（正好缩小 10 倍，略去计算公式）。
+
+三个元素收缩总和并不是 150px，而是只会收缩 150px 的 (0.1 + 0.2 + 0.3) / 1 即 60% 的空间：90px。
+
+每个元素收缩的空间为：
+
+90 * 0.1(flex-shrink) * 150(width) / 145 = 9.31
+90 * 0.2(flex-shrink) * 200(width) / 145 = 24.83
+90 * 0.3(flex-shrink) * 300(width) / 145 = 55.86
+三个元素的最终宽度分别为：
+
+150 - 9.31 = 140.69
+200 - 24.83 = 175.17
+300 - 55.86 = 244.14
+当然，类似 flex-grow，flex-shrink 也会受到 min-width 的影响。
+
+*/
