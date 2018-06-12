@@ -1,7 +1,7 @@
 const path = require('path')
 const resolve = (dir) => path.resolve(__dirname,dir)
 /**
- * 简单配置这个webpack 编译就行
+ * 简单配置 基本是是仅仅能编译
  */
 module.exports = {
     entry: "./main.js",
@@ -11,7 +11,7 @@ module.exports = {
         publicPath:'temp/'
     },
     resolve: {
-        extensions: [".ts",".js"],     // 自动补全，很重要
+        extensions: [".ts",".js"],     // 自动补全
         alias:{
             'API': resolve('./jsAPI'),
             'TS': resolve('./ts'),
