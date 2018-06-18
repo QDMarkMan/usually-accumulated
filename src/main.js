@@ -1,8 +1,6 @@
-import Person from './person.js'
-import './otherDemo.js'
-import './JavaScriptBreakThrough.js'
-//import './codestyle.js'
-import './accumulate.js';
+import '@/otherDemo.js'// 简单demo
+import '@/JavaScriptBreakThrough.js'// JavaScript基础部分
+import '@/accumulate.js';// 简单的JavaScript算法
 import 'API/String' // 字符串模块
 import 'API/Array' //数组模块
 import 'API/Object' // 对象模块

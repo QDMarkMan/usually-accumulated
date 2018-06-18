@@ -4,7 +4,7 @@ const resolve = (dir) => path.resolve(__dirname,dir)
  * 简单配置 基本是是仅仅能编译
  */
 module.exports = {
-    entry: "./main.js",
+    entry: "./src/main.js",
     output: {
         path: __dirname,
         filename: "bundle.js",
@@ -13,9 +13,10 @@ module.exports = {
     resolve: {
         extensions: [".ts",".js"],     // 自动补全
         alias:{
-            'API': resolve('./jsAPI'),
-            'TS': resolve('./ts'),
-            'CSS': resolve('./css'),
+            '@': resolve('./src'),
+            'API': resolve('./src/jsAPI'),
+            'TS': resolve('./src/ts'),
+            'CSS': resolve('./src/css'),
         }
     },
     module: {
