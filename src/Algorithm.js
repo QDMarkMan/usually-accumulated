@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-06-26 14:12:02
+ * @Last Modified time: 2018-06-26 14:14:27
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -56,9 +56,7 @@ function bubbleSort(arr){
         // 冒泡交换
         swap(arr,j,j-1)
       }
-      
     }
-    
   }
   console.timeEnd()
   console.log(arr)
