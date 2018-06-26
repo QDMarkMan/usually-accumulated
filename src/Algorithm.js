@@ -2,9 +2,10 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-05-30 15:20:45
+ * @Last Modified time: 2018-06-26 14:12:02
  * 简单的算法专题
  */
+console.warn(' ------------------------------------算法专题begin----------------------------------')
 /**
  * 交换参数
  * @param {*} arr 
@@ -85,3 +86,61 @@ function insertSort(arr){
   console.log(arr)
 }
 insertSort([3,2,1])
+
+/**
+ * 二分查找算法 
+ * 什么叫二分查找？ 二分查找也称为折半查找。是指在有序的数组里找出指定的值，返回该值在数组中的索引。
+ * （1）从有序数组的最中间元素开始查找，如果该元素正好是指定查找的值，则查找过程结束。否则进行下一步; 
+ * （2）如果指定要查找的元素大于或者小于中间元素，则在数组大于或小于中间元素的那一半区域查找，然后重复第一步的操作; 
+ * （3）重复以上过程，直到找到目标元素的索引，查找成功;或者直到子数组为空，查找失败。
+ * 注意： 这个先要把数组排序一下 在有序数组中查找
+ * 优点是比较次数少，查找速度快，平均性能好；
+ * 其缺点是要求待查表为有序表，且插入删除困难。因此，折半查找方法适用于不经常变动而查找频繁的有序列表。
+ */
+/**
+ * 非递归实现
+ * @param {*} arr 
+ * @param {*} target 
+ */
+function binarySearcNoRecursive(arr, target){
+  let low = 0, high = arr.length-1
+  while(low <= high) {
+    // 首先找到中间位置
+    let middle = parseInt((high + low ) / 2)
+    if( target === arr[middle]){
+      return middle
+    } else if (target > arr[middle]){
+      low = middle + 1
+    } else if ( target < arr[middle] ){
+      high = middle -1
+    }else { 
+      return -1
+    }
+  }
+}
+const result = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 23)
+console.log(`二分查找不用循环找到的位置:${result}`)
+/**
+ * 递归实现
+ * @param {*} arr 
+ * @param {*} target 
+ */
+function binarySearcRecursive(arr, low, high, target){
+  if(low > high){
+    return -1
+  }
+  let middle = parseInt((high + low ) / 2)
+  if(arr[middle] === target){
+    return middle
+  } else if(arr[middle] > target){
+    high = middle -1
+    binarySearcRecursive(arr, low, high, target)
+  } else if(arr[middle] < target){
+    low = middle + 1
+    binarySearcRecursive(arr, low, high, target)
+  }
+}
+const  recursiveRes = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 3)
+console.log(`二分查找不用循环找到的位置:${recursiveRes}`)
+
+console.warn(' ------------------------------------算法专题end----------------------------------')
