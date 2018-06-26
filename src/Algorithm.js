@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-06-26 14:14:27
+ * @Last Modified time: 2018-06-26 14:15:20
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -119,7 +119,7 @@ function binarySearcNoRecursive(arr, target){
 const result = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 23)
 console.log(`二分查找不用循环找到的位置:${result}`)
 /**
- * 递归实现
+ * 递归实现 循环调用自身
  * @param {*} arr 
  * @param {*} target 
  */
