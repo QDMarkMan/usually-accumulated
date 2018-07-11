@@ -4,3 +4,5 @@
  import './interface'
  import './class'
  import './function'
+ import './generic'
+ import './enum'
