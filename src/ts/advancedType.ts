@@ -103,4 +103,70 @@ else {
 }
  */
 
+// 4 类型别名
+/**
+ * 类型别名会给一个类型起个新名字。 类型别名有时和接口很像，但是可以作用于原始值，联合类型，元组以及其它任何你需要手写的类型。
+ */
+type Name = string
+type NameResolver = () => string
+type NameOrResolver = Name | NameResolver
+function getName(n: NameOrResolver) :Name{
+  if (typeof(n) === 'string'){
+    return n
+  }else{
+    return n()
+  }
+}
+/**
+ * 起别名不会新建一个类型 - 它创建了一个新 名字来引用那个类型。 
+ * 给原始类型起别名通常没什么用，尽管可以做为文档的一种形式使用。
+ */
+// 类型别名也可以是泛型
+type Container<T> = {
+  value: T
+}
+// 也可以使用类型别名来在属性里引用自己
+type Tree<T> = {
+  value: T,
+  left: Tree<T>
+}
+
+// 5 接口 VS 类型别名
+/**
+ * 另一个重要区别是类型别名不能被 extends和 implements（自己也不能 extends和 implements其它类型）。 
+ * 因为 软件中的对象应该对于扩展是开放的，但是对于修改是封闭的，你应该尽量去使用接口代替类型别名。
+ */
+type Alias = {
+  num: Number
+}
+interface interfaceed {
+  num: Number
+}
+declare function aliased(arg: Alias): Alias;
+declare function interfaceed(arg: interfaceed): interfaceed
+
+
+// 字符串字面量类型  
+// 定义之后 你只能从三种允许的字符中选择其一来做为参数传递，传入其它值则会产生错误。
+type Easing = "ease-in" | "ease-out" | "ease-in-out"
+class UiElement {
+  animate(dx: number, dy: number, easing: Easing){
+    if (easing === "ease-in") {
+      // ...
+    }
+    else if (easing === "ease-out") {
+    }
+    else if (easing === "ease-in-out") {
+    }
+    else {
+        // error! should not pass null or undefined.
+    }
+  }
+}
+
+// 数字字面量类型
+
+
+
+
 console.warn(`-------------------------Ts高级类型部分end-------------------------`)
