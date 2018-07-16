@@ -1,11 +1,9 @@
-
-
 /*
 * @Author: etf
 * @Date: 2017-08-30 18:09:03
  * @Last Modified by: etf
- * @Last Modified time: 2018-07-16 09:24:18
-* @description JavaScript设计模式详解
+ * @Last Modified time: 2018-07-16 11:12:02
+* @description JavaScript设计模式详解 使用ES5语法
 */
 
 /**
@@ -27,33 +25,36 @@
 */
 
 /**
-* 一
-* 单例模式 保证一个类只有一个实例，实现方法是先判断实例存在与否，如果存在直接返回，如果不存在就创建了再返回，确保一个类只有一个实例对象。
-*
-* 在 JavaScript 中，单例作为一个命名空间提供者，从全局命名空间里提供一个唯一的访问点来访问该对象。
-*/
-console.warn("------------------------------------这个是JavaScript设计模式Demo begin------------------------------------");
+ * 一
+ * 单例模式 保证一个类只有一个实例，实现方法是先判断实例存在与否，如果存在直接返回，如果不存在就创建了再返回，确保一个类只有一个实例对象。
+ *
+ * 在 JavaScript 中，单例作为一个命名空间提供者，从全局命名空间里提供一个唯一的访问点来访问该对象。
+ */
+console.warn(
+  "------------------------------------这个是JavaScript设计模式Demo begin------------------------------------"
+);
 let Singleton = (function() {
-let instantiated;
+  let instantiated;
 
-function init() {
-//这里定义单例代码
-return {
-publicMethord: function() {
-console.log('welcome to singleton');
-},
-publicProperty: 'test',
-}
-}
+  function init() {
+    //这里定义单例代码
+    return {
+      publicMethord: function() {
+        console.log("welcome to singleton");
+      },
+      publicProperty: "test"
+    };
+  }
 
-return {
-getInstance: function() {
-if (!instantiated) { //确保只有一个实例
-instantiated = init(); //使用init方法，是使publicMethod和publicProperty只在要使用的时候才初始化;
-}
-return instantiated;
-}
-}
+  return {
+    getInstance: function() {
+      if (!instantiated) {
+        //确保只有一个实例
+        instantiated = init(); //使用init方法，是使publicMethod和publicProperty只在要使用的时候才初始化;
+      }
+      return instantiated;
+    }
+  };
 })();
 /*调用公有的方法来获取实例:*/
 Singleton.getInstance().publicMethord();
@@ -80,56 +81,56 @@ Singleton.getInstance().publicMethord();
 */
 //（1）获取DOM对象
 let $ = function(id) {
-return typeof id === 'string' ? document.getElementById(id) : id;
-}
+  return typeof id === "string" ? document.getElementById(id) : id;
+};
 
 //（2）弹框构造函数
 let Modal = function(id, html) {
-this.html = html;
-this.id = id;
-this.open = false;
-}
+  this.html = html;
+  this.id = id;
+  this.open = false;
+};
 //这里我们声明了一个 Modal 作为弹框的构造函数，并且再其内部定义了公有属性 html、id 和 open。html 用来定义弹框内部的内容，id 用来给弹框定义 id 名称，open 用于判断弹框是否打开。
 
 //（3）open方法
 Modal.prototype.create = function() {
-if (!this.open) {
-var modal = document.createElement('div');
-modal.innerHTML = this.html;
-modal.id = this.id;
+  if (!this.open) {
+    var modal = document.createElement("div");
+    modal.innerHTML = this.html;
+    modal.id = this.id;
 
-document.body.appendChild(modal);
+    document.body.appendChild(modal);
 
-setTimeout(function() {
-modal.classList.add('show');
-}, 0)
+    setTimeout(function() {
+      modal.classList.add("show");
+    }, 0);
 
-this.open = true;
-}
-}
+    this.open = true;
+  }
+};
 //在 Modal 的原型链上定义了 create 方法，方法内部我们创建并向 DOM 中插入弹框，同时给弹框加上一个 class 为 “show” 的动画效果。
 
 //（4）close方法
 Modal.prototype.delete = function() {
-if (this.open) {
-var modal = $(this.id);
-modal.classList.add('hide');
+  if (this.open) {
+    var modal = $(this.id);
+    modal.classList.add("hide");
 
-setTimeout(function() {
-document.body.removeChild(modal);
-}, 200)
+    setTimeout(function() {
+      document.body.removeChild(modal);
+    }, 200);
 
-this.open = false;
-}
-}
+    this.open = false;
+  }
+};
 //定义了 open 方法后我们这里定义关闭弹框的方法，在其内部给弹框对象添加 hide 类动画效果，最后在页面上移除弹框对象。
 
 //（5）创建实例
 let createInstance = (function() {
-var instance;
-return function() {
-return instance || (instance = new Modal('modal', '这是一个单例的模态框'));
-}
+  var instance;
+  return function() {
+    return instance || (instance = new Modal("modal", "这是一个单例的模态框"));
+  };
 })();
 /**
 * 这是实现单例模式的重要部分:
@@ -138,30 +139,30 @@ return instance || (instance = new Modal('modal', '这是一个单例的模态�
 */
 //（6）按钮操作
 var operate = {
-setModal: null,
-open: function() {
-this.setModal = createInstance();
-this.setModal.create();
-},
-delete: function() {
-this.setModal ? this.setModal.delete() : "";
-}
-}
+  setModal: null,
+  open: function() {
+    this.setModal = createInstance();
+    this.setModal.create();
+  },
+  delete: function() {
+    this.setModal ? this.setModal.delete() : "";
+  }
+};
 //这里我们将按钮操作放在 operate 对象里，使得打开和关闭操作可以通过this获取实例setModal。
 
 //绑定事件
-$('open').onclick = function() {
-operate.open();
+$("open").onclick = function() {
+  operate.open();
 };
-$('delete').onclick = function() {
-operate.delete();
+$("delete").onclick = function() {
+  operate.delete();
 };
 
 /**
-* 二
-* 构造函数模式
-* 构造函数用于创建特定类型的对象——不仅声明了使用过的对象，构造函数还可以接受参数以便第一次创建对象的时候设置对象的成员值。你可以自定义自己的构造函数，然后在里面声明自定义类型对象的属性或方法。
-*/
+ * 二
+ * 构造函数模式
+ * 构造函数用于创建特定类型的对象——不仅声明了使用过的对象，构造函数还可以接受参数以便第一次创建对象的时候设置对象的成员值。你可以自定义自己的构造函数，然后在里面声明自定义类型对象的属性或方法。
+ */
 /**
 * 作用和注意事项
 
@@ -185,19 +186,19 @@ operate.delete();
 */
 //实例 强制使用new
 function ConstructionPattern(name, age, id) {
-if (!(this instanceof ConstructionPattern)) {
-return new ConstructionPattern(name, age, id);
-}
+  if (!(this instanceof ConstructionPattern)) {
+    return new ConstructionPattern(name, age, id);
+  }
 
-this.name = name;
-this.age = age;
-this.id = id;
-this.sayId = function() {
-return this.id;
+  this.name = name;
+  this.age = age;
+  this.id = id;
+  this.sayId = function() {
+    return this.id;
+  };
 }
-}
-var constructionPattern1 = new ConstructionPattern('zhangsan', 55, '001');
-var constructionPattern2 = new ConstructionPattern('zhangsan', 55, '002');
+var constructionPattern1 = new ConstructionPattern("zhangsan", 55, "001");
+var constructionPattern2 = new ConstructionPattern("zhangsan", 55, "002");
 console.log(constructionPattern1.sayId());
 console.log(constructionPattern2.sayId());
 
@@ -229,39 +230,39 @@ console.log(constructionPattern2.sayId());
 //3.工人是盖房子的 工人可以建厨房、卧室、建客厅
 //4.包工头只是一个接口而已 他不干活 他只对外说我能建房子
 function House() {
-this.kitchen = "";
-this.bedromm = "";
-this.livingroom = "";
+  this.kitchen = "";
+  this.bedromm = "";
+  this.livingroom = "";
 }
 
 function Contractor() {
-this.construct = function(worker) {
-worker.construct_kitchen();
-worker.construct_bedroom();
-worker.construct_livingroom();
-}
+  this.construct = function(worker) {
+    worker.construct_kitchen();
+    worker.construct_bedroom();
+    worker.construct_livingroom();
+  };
 }
 
 function worker() {
-this.construct_kitchen = function() {
-console.log('厨房建造好了');
-}
-this.construct_bedroom = function() {
-console.log('卧室建造好了');
-}
-this.construct_livingroom = function() {
-console.log('客厅建好了');
-}
+  this.construct_kitchen = function() {
+    console.log("厨房建造好了");
+  };
+  this.construct_bedroom = function() {
+    console.log("卧室建造好了");
+  };
+  this.construct_livingroom = function() {
+    console.log("客厅建好了");
+  };
 
-this.submit = function() {
-let _house = new House();
-//房子已经建好 提交时修改房屋的属性
-_house.kitchen = 'finished';
-_house.bedromm = "finished";
-_house.livingroom = "finished";
+  this.submit = function() {
+    let _house = new House();
+    //房子已经建好 提交时修改房屋的属性
+    _house.kitchen = "finished";
+    _house.bedromm = "finished";
+    _house.livingroom = "finished";
 
-return _house;
-}
+    return _house;
+  };
 }
 
 let myworker = new worker();
@@ -289,46 +290,48 @@ console.log(myHouse);
 //简单工厂模式
 var XMLHttpFactory = function() {};
 XMLHttpFactory.createXMLHttp = function() {
-let XMLHttp = null;
-// XMLHttpFactory.createXMLHttp()这个方法根据当前环境的具体情况返回一个XHR对象
-if (window.XMLHttpRequest) {
-XMLHttp = new XMLHttpRequest();
-} else if (window.ActiveXObject) {
-XMLHttp = new ActiveXObject("Microsoft.XMLHTTP");
-}
-return XMLHttp;
-}
+  let XMLHttp = null;
+  // XMLHttpFactory.createXMLHttp()这个方法根据当前环境的具体情况返回一个XHR对象
+  if (window.XMLHttpRequest) {
+    XMLHttp = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    XMLHttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  return XMLHttp;
+};
 var AjaxHandle = function() {
-let XMLHttp = XMLHttpFactory.createXMLHttp();
-/*...具体操作... */
-}
+  let XMLHttp = XMLHttpFactory.createXMLHttp();
+  /*...具体操作... */
+};
 
 //抽象工厂
 var abstractXMLHttpFactory = function() {};
 abstractXMLHttpFactory.prototype = {
-// 如果真的要调用这个方法会抛出一个错误，它不能被实例化，只能用来派生子类
-createXMLHttp: function() {
-throw new error('This is an abstract class');
-}
-}
+  // 如果真的要调用这个方法会抛出一个错误，它不能被实例化，只能用来派生子类
+  createXMLHttp: function() {
+    throw new error("This is an abstract class");
+  }
+};
 var XHRHandler = function() {
-abstractXMLHttpFactory.call(this);
-}
+  abstractXMLHttpFactory.call(this);
+};
 XHRHandler.prototype = new abstractXMLHttpFactory();
 XHRHandler.prototype.constructor = XHRHandler; // 重新定义 createFactory 方法
 XHRHandler.prototype.createXMLHttp = function() {
-let XMLHttp = null;
-// abstractXMLHttpFactory.createXMLHttp()这个方法根据当前环境的具体情况返回一个XHR对象
-if (window.XMLHttpRequest) {
-XMLHttp = new XMLHttpRequest();
-} else if (window.ActiveXObject) {
-XMLHttp = new ActiveXObject("Microsoft.XMLHTTP");
-}
-return XMLHttp;
-}
+  let XMLHttp = null;
+  // abstractXMLHttpFactory.createXMLHttp()这个方法根据当前环境的具体情况返回一个XHR对象
+  if (window.XMLHttpRequest) {
+    XMLHttp = new XMLHttpRequest();
+  } else if (window.ActiveXObject) {
+    XMLHttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  return XMLHttp;
+};
 var abstractAjaxHander = function() {
-var XMLHttp = abstractXMLHttpFactory.createXMLHttp();
-/*...具体操作... */
-}
+  var XMLHttp = abstractXMLHttpFactory.createXMLHttp();
+  /*...具体操作... */
+};
 
-console.warn("------------------------------------这个是JavaScript设计模式Demo end------------------------------------");
+console.warn(
+  "------------------------------------这个是JavaScript设计模式Demo end------------------------------------"
+);
