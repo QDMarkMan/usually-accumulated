@@ -2,7 +2,7 @@
 * @Author: etf
 * @Date: 2017-08-30 18:09:03
  * @Last Modified by: etf
- * @Last Modified time: 2018-07-16 11:12:02
+ * @Last Modified time: 2018-07-16 11:13:36
 * @description JavaScript设计模式详解 使用ES5语法
 */
 
@@ -223,7 +223,7 @@ console.log(constructionPattern2.sayId());
 加工工艺是暴露的
 
 实例
-个土豪需要建一个别墅，然后直接找包工头，包工头再找工人把别墅建好。这里土豪不用直接一个一个工人的去找。只需包工头知道土豪需求，然后去找工人，工人干活，土豪也不需要知道房子具体怎么建，最后能拿到房就可以了。
+一个土豪需要建一个别墅，然后直接找包工头，包工头再找工人把别墅建好。这里土豪不用直接一个一个工人的去找。只需包工头知道土豪需求，然后去找工人，工人干活，土豪也不需要知道房子具体怎么建，最后能拿到房就可以了。
 */
 //1.产出东西是房子
 //2.包工头调用工人进行开工而且他要很清楚工人们具体的某一个大项
@@ -273,7 +273,9 @@ var myHouse = myworker.submit();
 console.log(myHouse);
 
 /**
-* 工厂模式 工厂模式定义一个用于创建对象的接口，这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类。而子类可以重写接口方法以便创建的时候指定自己的对象类型（抽象工厂）。
+* 四工厂模式 
+工厂模式定义一个用于创建对象的接口，这个接口由子类决定实例化哪一个类。该模式使一个类的实例化延迟到了子类。
+而子类可以重写接口方法以便创建的时候指定自己的对象类型（抽象工厂）。
 * 模式作用：
 
 对象构建十分复杂
@@ -328,10 +330,8 @@ XHRHandler.prototype.createXMLHttp = function() {
   return XMLHttp;
 };
 var abstractAjaxHander = function() {
-  var XMLHttp = abstractXMLHttpFactory.createXMLHttp();
+  var XMLHttp = abstractXMLHttpFactory.createXMLHttp()
   /*...具体操作... */
-};
+}
 
-console.warn(
-  "------------------------------------这个是JavaScript设计模式Demo end------------------------------------"
-);
+console.warn("------------------------------------这个是JavaScript设计模式Demo end------------------------------------")

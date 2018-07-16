@@ -42,6 +42,7 @@ module.exports = {
     plugins: [
         
     ],
+    // 服务
     devServer:{
         contentBase:path.join(__dirname),
         compress:true,

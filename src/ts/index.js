@@ -6,3 +6,4 @@
  import './function'
  import './generic'
  import './enum'
+ import './iterator'
