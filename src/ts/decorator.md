@@ -36,22 +36,25 @@ I am decorator.
 函数柯里化解决参数问题
 但是实际场景中，有时希望向装饰器传入一些参数, 如下：
 
+``` typescript
 @Path("/hello", "world")
 class HelloService {}
+```
 此时上面装饰器方法就不满足了（VSCode编译报错），这是我们可以借助JavaScript中函数柯里化特性
-
+``` typescript
 function Path(p1: string, p2: string) {
     return function (target) { //  这才是真正装饰器
         // do something 
     }
 }
+```
 五种装饰器
 在TypeScript中装饰器可以修饰四种语句：类，属性，访问器，方法以及方法参数。
 
 1 类装饰器
 应用于类构造函数，其参数是类的构造函数。
 注意class并不是像Java那种强类型语言中的类，而是JavaScript构造函数的语法糖。
-
+``` typescript
 function Path(path: string) {
     return function (target: Function) {
         !target.prototype.$Meta && (target.prototype.$Meta = {})
@@ -67,6 +70,7 @@ class HelloService {
 console.log(HelloService.prototype.$Meta);// 输出：{ baseUrl: '/hello' }
 let hello = new HelloService();
 console.log(hello.$Meta) // 输出：{ baseUrl: '/hello' }
+```
 2 方法装饰器
 它会被应用到方法的 属性描述符上，可以用来监视，修改或者替换方法定义。
 方法装饰会在运行时传入下列3个参数：
@@ -74,6 +78,7 @@ console.log(hello.$Meta) // 输出：{ baseUrl: '/hello' }
 1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
 2、成员的名字。
 3、成员的属性描述符。
+``` typescript
 function GET(url: string) {
     return function (target, methodName: string, descriptor: PropertyDescriptor) {
         !target.$Meta && (target.$Meta = {});
@@ -88,20 +93,23 @@ class HelloService {
 }
 
 console.log((<any>HelloService).$Meta);
+```
 注意：在vscode编辑时有时会报作为表达式调用时，无法解析方法修饰器的签名。错误，此时需要在tsconfig.json中增加target配置项：
-
+``` bash
 {
     "compilerOptions": {
         "target": "es6",
         "experimentalDecorators": true,
     }
 }
+```
 3 方法参数装饰器
 参数装饰器表达式会在运行时当作函数被调用，传入下列3个参数：
 
 1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
 2、参数的名字。
 3、参数在函数参数列表中的索引。
+``` typescript
 function PathParam(paramName: string) {
     return function (target, methodName: string, paramIndex: number) {
         !target.$Meta && (target.$Meta = {});
@@ -115,11 +123,14 @@ class HelloService {
 }
 
 console.log((<any>HelloService).prototype.$Meta); // {'0':'userId'}
+```
 4 属性装饰器
 属性装饰器表达式会在运行时当作函数被调用，传入下列2个参数：
 
 1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
 2、成员的名字。
+``` typescript
+ 
 function DefaultValue(value: string) {
     return function (target: any, propertyName: string) {
         target[propertyName] = value;
@@ -131,7 +142,9 @@ class Hello {
 }
 
 console.log(new Hello().greeting);// 输出: world
+``` 
 装饰器加载顺序
+``` typescript
 function ClassDecorator() {
     return function (target) {
         console.log("I am class decorator");
@@ -167,13 +180,13 @@ class Hello {
     @MethodDecorator()
     greet( @Param1Decorator() p1: string, @Param2Decorator() p2: string) { }
 }
-输出结果：
-
+// 输出结果：
 I am property decorator
 I am parameter2 decorator
 I am parameter1 decorator
 I am method decorator
 I am class decorator
+```
 从上述例子得出如下结论：
 
 1、有多个参数装饰器时：从最后一个参数依次向前执行
