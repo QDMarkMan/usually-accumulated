@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-06-26 14:15:20
+ * @Last Modified time: 2018-08-16 17:15:13
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -12,7 +12,7 @@ console.warn(' ------------------------------------算法专题begin------------
  * @param {*} a 
  * @param {*} b 
  */
-function swap(arr,a,b) {
+function swap(arr: number[], a:number, b:number) {
   let curr = arr[a]
   arr[a] = arr[b]
   arr[b] = curr
@@ -21,7 +21,7 @@ function swap(arr,a,b) {
  * 
  * @param {选择排序算法} arr 
  */
-function sort(arr) {
+function sort(arr: number[]) {
   console.time()
   for (let i = 0; i < arr.length; i++) {
     //假设遍历的当前第一个是最小的
@@ -45,7 +45,7 @@ sort([3,6,28,123,34])
  * 
  * @param {*冒泡排序算法} arr 
  */
-function bubbleSort(arr){
+function bubbleSort(arr: number[]){
   console.log('冒泡算法开始时间:')
   console.time()
   for (let i = 0; i < arr.length; i++) {
@@ -67,7 +67,7 @@ bubbleSort([3,123,6,28,34])
  * 
  * @param {插入排序} arr 
  */
-function insertSort(arr){
+function insertSort(arr: number[]){
   console.time()
   for (let i = 0; i < arr.length; i++) {
     // 在一次循环的时候首先缓存下来当前的值和上一个index 缓存上一个index用来比较
@@ -100,11 +100,11 @@ insertSort([3,2,1])
  * @param {*} arr 
  * @param {*} target 
  */
-function binarySearcNoRecursive(arr, target){
-  let low = 0, high = arr.length-1
+function binarySearcNoRecursive(arr: number[], target: number){
+  let low: number = 0, high: number = arr.length-1
   while(low <= high) {
     // 首先找到中间位置
-    let middle = parseInt((high + low ) / 2)
+    let middle = ((high + low ) / 2)
     if( target === arr[middle]){
       return middle
     } else if (target > arr[middle]){
@@ -123,11 +123,11 @@ console.log(`二分查找不用循环找到的位置:${result}`)
  * @param {*} arr 
  * @param {*} target 
  */
-function binarySearcRecursive(arr, low, high, target){
+function binarySearcRecursive(arr: number[], low:number, high: number, target:number){
   if(low > high){
     return -1
   }
-  let middle = parseInt((high + low ) / 2)
+  let middle = ((high + low ) / 2)
   if(arr[middle] === target){
     return middle
   } else if(arr[middle] > target){
@@ -140,5 +140,37 @@ function binarySearcRecursive(arr, low, high, target){
 }
 const  recursiveRes = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 3)
 console.log(`二分查找不用循环找到的位置:${recursiveRes}`)
-
+console.log(`leet code 专题开始`)
+/**
+ * leet code 算法专题
+ */
+/**
+ * 1 删除排序数组中的重复项
+ * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+ * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+ */
+function removeDuplicates(nums: number[]): number {
+  let i: number = 0
+  for (let j = 0; j < nums.length; j++) {
+    if(nums[j] !== nums[i]) {
+      i++
+      nums[i] = nums[j]
+    }
+  }
+  nums.splice(i+1)
+  console.log(nums)
+  console.log(nums.length)
+  return i + 1
+}
+/**
+ * 解析
+ * 1：方法 双指针法
+ * i是慢指针，j是快指针 当我们遇到 nums[j] \neq nums[i]nums[j]≠nums[i] 时，跳过重复项的运行已经结束，
+ * 因此我们必须把它（nums[j]nums[j]）的值复制到 nums[i + 1]nums[i+1]。然后递增 ii，接着我们将再次重复相同的过程，直到 jj 到达数组的末尾为止。
+ * 复杂度分析：
+ * 时间复杂度： O(n) 假设数组长度是n 那么i和j最多就是遍历n步
+ * 空间复杂度： O(1)
+ */
+removeDuplicates([0,0,1,1,1,2,2,3,3,4])
+console.log(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
