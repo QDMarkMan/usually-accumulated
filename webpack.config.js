@@ -49,7 +49,7 @@ module.exports = {
         inline:true,
         host:'127.0.0.1',
         port:8888,
-        open: true
+        open: false
     },
     mode:"development"
 }

@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-16 17:15:13
+ * @Last Modified time: 2018-08-17 11:16:59
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -140,7 +140,7 @@ function binarySearcRecursive(arr: number[], low:number, high: number, target:nu
 }
 const  recursiveRes = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 3)
 console.log(`二分查找不用循环找到的位置:${recursiveRes}`)
-console.log(`leet code 专题开始`)
+console.warn(`leet code 专题开始`)
 /**
  * leet code 算法专题
  */
@@ -164,7 +164,7 @@ function removeDuplicates(nums: number[]): number {
 }
 /**
  * 解析
- * 1：方法 双指针法
+ * 方法 双指针法
  * i是慢指针，j是快指针 当我们遇到 nums[j] \neq nums[i]nums[j]≠nums[i] 时，跳过重复项的运行已经结束，
  * 因此我们必须把它（nums[j]nums[j]）的值复制到 nums[i + 1]nums[i+1]。然后递增 ii，接着我们将再次重复相同的过程，直到 jj 到达数组的末尾为止。
  * 复杂度分析：
@@ -172,5 +172,50 @@ function removeDuplicates(nums: number[]): number {
  * 空间复杂度： O(1)
  */
 removeDuplicates([0,0,1,1,1,2,2,3,3,4])
-console.log(`leet code 专题结束`)
+
+/**
+ * 2：  买卖股票的最佳时机
+ * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+ * 设计一个算法来计算你所能获取的最大利润。你最多可以完成一次交易
+ * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）
+ */
+function maxProfit(prices: number[]): number {
+  if(prices.length < 2) return 0
+  // 定义利润
+  let count: number = 0
+  let PreMin:number =prices[0]
+  // 获取最大的单天利润
+  for (let i = 0; i < prices.length; i++) {
+    count = Math.max(count, prices[i] - PreMin)
+    PreMin = Math.min(PreMin, prices[i])
+  }
+  console.log(count)
+  return count
+}
+/**
+ * 解析： 贪心算法
+ */
+maxProfit([7,1,5,3,6,4])
+/**
+ * 3：  买卖股票的最佳时机
+ * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+ * 设计一个算法来计算你所能获取的最大利润。你可以尽可能多的完成交易
+ * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）
+ */
+function maxProfitMore (prices: number[]) :number{
+  if(prices.length < 2) return 0
+  let ret = 0
+  for (let i = 0; i < prices.length; i++) {
+    if (prices[i+1] > prices[i]) {
+      ret += prices[i+1] - prices[i]
+    }
+  }
+  return ret
+}
+/**
+ * 解析： 非贪心算法 
+ * 只要下一天的价钱 大于今天的价钱 那我们就卖出当前天的 最终的结果就是我们的利润总和
+ */
+console.log(maxProfitMore([7,1,5,8,3,6,4]))
+console.warn(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
