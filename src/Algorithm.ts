@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-21 09:33:20
+ * @Last Modified time: 2018-08-21 09:38:45
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -220,6 +220,7 @@ console.log(maxProfitMore([7,1,5,8,3,6,4]))
 
 /**
  * 4： 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
+ * 要求O(1)的空间复杂度，对原数组进行操作
  */
 function rotate(nums: number[], k: number) {
   for (let i = 0; i < k; i++) {
