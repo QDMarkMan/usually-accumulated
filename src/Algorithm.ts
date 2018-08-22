@@ -230,5 +230,28 @@ function rotate(nums: number[], k: number) {
 }
 rotate([1,2,3,4,5,6,7],3)
 
+/**
+ * 5： 存在重复 
+ * 给定一个整数数组，判断是否存在重复元素。
+ * 如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
+ */
+var containsDuplicate = function (nums: number[]) :boolean{
+    let judge = false
+    if (nums.length <= 1) {
+      return judge
+    }
+    let current :number[] =[]
+    for (let i = 0; i < nums.length; i++) {
+      if (current.indexOf(nums[i]) === -1) {
+        current.push(nums[i])
+      } else {
+        return judge = true
+      }
+    }
+    return judge
+}
+console.log(containsDuplicate([3,1]))
+// 这个其实是非常常见而且简单得一个算法 但是要考虑到得情况多一点
+
 console.warn(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
