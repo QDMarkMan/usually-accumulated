@@ -216,7 +216,9 @@ function maxProfitMore (prices: number[]) :number{
  * 解析： 非贪心算法 
  * 只要下一天的价钱 大于今天的价钱 那我们就卖出当前天的 最终的结果就是我们的利润总和
  */
+console.log('==================股票最佳购买时机==================');
 console.log(maxProfitMore([7,1,5,8,3,6,4]))
+console.log('====================================');
 
 /**
  * 4： 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -235,7 +237,7 @@ rotate([1,2,3,4,5,6,7],3)
  * 给定一个整数数组，判断是否存在重复元素。
  * 如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
  */
-var containsDuplicate = function (nums: number[]) :boolean{
+const containsDuplicate = function (nums: number[]) :boolean{
     let judge = false
     if (nums.length <= 1) {
       return judge
@@ -250,8 +252,37 @@ var containsDuplicate = function (nums: number[]) :boolean{
     }
     return judge
 }
+console.log('================是否存在重复算法====================');
 console.log(containsDuplicate([3,1]))
+console.log('====================================');
 // 这个其实是非常常见而且简单得一个算法 但是要考虑到得情况多一点
+
+/**
+ * 6: 只出现一次得数字
+ * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+ * 你的算法应该具有线性时间复杂度。 不使用额外空间来实现
+ */
+const singleNumber = function(nums: number[]) :number {
+  let index= -1
+  nums.forEach((key, j)=> {
+    let count = 0
+    for (let k = 0; k < nums.length; k++) {
+      if (key === nums[k]) {
+        count += 1
+      }
+      if (k === nums.length -1 && count === 1) {
+        index = j
+      }
+    }
+  })
+  return nums[index]
+}
+console.log('=================查找单独数算法===================');
+console.log(singleNumber([2,2,1,3,3]))
+console.log('====================================');
+
+
+
 
 console.warn(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
