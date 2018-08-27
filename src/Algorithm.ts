@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-21 09:38:45
+ * @Last Modified time: 2018-08-27 09:43:25
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -280,8 +280,25 @@ const singleNumber = function(nums: number[]) :number {
 console.log('=================查找单独数算法===================');
 console.log(singleNumber([2,2,1,3,3]))
 console.log('====================================');
-
-
+/**
+ * 7：求两个数组的交集
+ */
+const intersect = function (nums1:number[], nums2:number[]) :number[]{
+  let arr:number[] = []
+  for (let i = 0; i < nums1.length; i++) {
+    if (nums2.indexOf(nums1[i]) !== -1 ) {
+      nums2.splice(nums2.indexOf(nums1[i]), 1)
+      arr.push(nums1[i])
+    }
+  }
+  return arr
+}
+/**
+ * 解析： 在求交集的过程中。主要的思想是关于什么是交集。
+ * 两个数组的重合部分理论上来讲就是交集
+ * 循环其中一个数组nums1在后在另外一个数组nums2中比对是否出现，如果出现的话就删除nums2中出现过的数组（注意是修改nums2）
+ */
+intersect([1,2,2,1], [2,2])
 
 
 console.warn(`leet code 专题结束`)
