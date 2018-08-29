@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-27 09:43:25
+ * @Last Modified time: 2018-08-29 11:29:34
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -299,6 +299,44 @@ const intersect = function (nums1:number[], nums2:number[]) :number[]{
  * 循环其中一个数组nums1在后在另外一个数组nums2中比对是否出现，如果出现的话就删除nums2中出现过的数组（注意是修改nums2）
  */
 intersect([1,2,2,1], [2,2])
+
+/**
+ * 8：加1
+ * 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+ * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+ */
+const plusOne =function (nums: number[]) :number[] {
+  let j = nums.length - 1
+  // js无法正常表示大于16位的整数【非科学计数】
+  for (let i = nums.length - 1; i >=0; i--) {
+    // 开始逐个进行加法运算
+    if(i == j) {
+      // 大于10的情况
+      if(nums[i] + 1 >= 10){
+        nums[i] = nums[i] + 1 -10
+        j--
+        // 最后一次循环
+        if (i === 0) {
+          nums.unshift(1)
+          break
+        }
+      } else {
+        nums[j] ++
+      }
+    } else {
+      break
+    }
+  }
+  console.log(nums)
+  return nums
+}
+/**
+ * 解析： 如果使用太大的数的话转成数字再加1是不行的，我们需要对数组中的的单个数据进行运算，同样的是以辅助游标进行运算
+ * 辅助游标j的主要作用是记录需要+1的位置，如果当前的下标不等于j那么就跳出了循环：同时也提高了性能
+ */
+console.log('================加1算法====================');
+console.log(plusOne([8,2,1,,1,2,2,2,3,5,5,5,5,5,2,3,4,2,3,4,5,5,5,5,2,9]))
+console.log('====================================');
 
 
 console.warn(`leet code 专题结束`)
