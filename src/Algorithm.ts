@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-29 11:29:34
+ * @Last Modified time: 2018-08-31 09:53:07
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -318,7 +318,6 @@ const plusOne =function (nums: number[]) :number[] {
         // 最后一次循环
         if (i === 0) {
           nums.unshift(1)
-          break
         }
       } else {
         nums[j] ++
@@ -337,6 +336,99 @@ const plusOne =function (nums: number[]) :number[] {
 console.log('================加1算法====================');
 console.log(plusOne([8,2,1,,1,2,2,2,3,5,5,5,5,5,2,3,4,2,3,4,5,5,5,5,2,9]))
 console.log('====================================');
+
+/**
+ * 9: 移动零
+ * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+ * 
+ * 输入: [0,1,0,3,12]
+ * 输出: [1,3,12,0,0]
+ */
+const moveZeroes = function(nums: number[]) {
+  // 0出现的个数
+  let j = 0
+  nums.forEach((el: number, index: number, arr: number[]) => {
+    if (nums[j] === 0) {
+      nums.splice(j, 1)
+      nums.push(0)
+    } else {
+      j++ 
+    }
+  })
+  console.log(nums)
+}
+/**
+ * 解析： 新建一个小游标j 这个是用来标识0出现的地方，每次移动完之后小游标是不变化的，因为原数组已经修改所以要固定一下游标
+ * 双游标法在算法真的很实用
+ */
+console.log('==================移动零算法==================');
+moveZeroes([1,2,0,0,0,1])
+console.log('====================================');
+
+/**
+ * 10: 找父亲节点
+ * pid为0代表一级，pid如果和pid为0的id相等的话代表二级 以此类推...
+ */
+const arr = [
+  {"pid":0,"id":3,"name":"最外层3"},
+  {"pid":0,"id":4,"name":"最外层4"},
+  {"pid":4,"id":5,"name":"最外层-4"},
+  {"pid":5,"id":6,"name":"最外层-4-1"},
+  {"pid":0,"id":7,"name":"最外层7"},
+  {"pid":7,"id":8,"name":"最外层-7"},
+  {"pid":0,"id":9,"name":"最外层9"},
+  {"pid":9,"id":10,"name":"最外层9-1"},
+  {"pid":9,"id":11,"name":"最外层9-2"},
+  {"pid":11,"id":12,"name":"最外层9-2-1"}
+]
+/**
+ * 第一种方法：双递归方式
+ * @param arr 
+ */
+const findPid  = function (arr: any[]): any[] {
+  let newArr:any[] = []
+  for (let i = 0; i < arr.length; i++) {
+    let flagId = arr[i].id // 取出来一个flag 这个是用于和下一个级别匹配的
+    for (let j = 0; j < arr.length; j++) {
+      const elJ = arr[j]
+      if (elJ.pid === flagId) { // pid 和 上级id 匹配
+        (arr[i].children = []).push(elJ)
+      }
+    }
+    // 只存入第一等级
+    arr[i].pid === 0 && newArr.push(arr[i])
+  }
+  return newArr
+}
+/**
+ * 第二种方法： 使用对象存储id 然后和pid进行对比
+ * @param arr 
+ */
+const findPidByObj = function (arr: any[]): any[] {
+  let newArr:any[] = []
+  let flagObj: any = {}
+  arr.forEach(v => {
+    flagObj[v.id] = v
+  })
+  arr.forEach (item => {
+    // 根据当前遍历对象的pid,去map对象中找到对应索引的id
+    const top = flagObj[item.pid]
+    if (top) {
+      // 如果找到索引，那么说明此项不在顶级当中,那么需要把此项添加到，他对应的父级中
+      (top.children || (top.children = [])).push(item)
+    } else {
+      // 如果没有在map中找到对应的索引ID,那么直接把当前的item添加到newData结果集中作为顶级
+      newArr.push(item)
+    }
+  })
+  return newArr
+}
+console.log('====================================');
+console.log('找父亲节点方式');
+console.log(findPid(arr))
+console.log(findPidByObj(arr))
+console.log('====================================');
+
 
 
 console.warn(`leet code 专题结束`)
