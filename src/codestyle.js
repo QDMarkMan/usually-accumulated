@@ -1,7 +1,7 @@
 /**
  * 关于ES6的编程风格
  */
-'use strict'
+// 'use strict'
 console.log("ES6代码风格");
 //1:块级作用域 (let取代var)
 //ES6提出了两个新的声明变量的命令：let和const。其中，let完全可以取代var，因为两者语义相同，而且let没有副作用。
