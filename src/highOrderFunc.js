@@ -3,7 +3,7 @@
  * @Author: etf 
  * @Date: 2018-09-01 23:02:11 
  * @Last Modified by: etf
- * @Last Modified time: 2018-09-02 14:16:48
+ * @Last Modified time: 2018-09-03 14:34:04
  * JavaScript高阶函数的实现
  */
 /**
@@ -105,7 +105,8 @@ const curring = function(fn) {
       console.log(`暂存${arguments[1] ? arguments[1] : '' }月，金额${arguments[0]}`)
       args.push(currentArgs)
       // 返回正被执行的 Function 对象，也就是所指定的 Function 对象的正文，这有利于匿名函数的递归或者保证函数的封装性
-      return arguments.callee
+      // 这个很重要
+      // return arguments.callee
     }
   }
 }
@@ -229,6 +230,7 @@ let addEventLazy = function(el, type, handler) {
   if (window.addEventListener) {
     // 一旦进入分支，便在函数内部修改函数的实现
     addEventLazy = function(el, type, handler) {
+      
       el.addEventListener(type, handler, false)
     }
   } else if (window.attachEvent) {

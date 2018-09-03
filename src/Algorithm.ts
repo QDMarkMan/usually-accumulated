@@ -2,7 +2,7 @@
  * @Author: etf 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-08-31 09:53:07
+ * @Last Modified time: 2018-09-03 16:53:03
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -369,7 +369,7 @@ console.log('====================================');
  * 10: 找父亲节点
  * pid为0代表一级，pid如果和pid为0的id相等的话代表二级 以此类推...
  */
-const arr = [
+const findArr = [
   {"pid":0,"id":3,"name":"最外层3"},
   {"pid":0,"id":4,"name":"最外层4"},
   {"pid":4,"id":5,"name":"最外层-4"},
@@ -425,8 +425,8 @@ const findPidByObj = function (arr: any[]): any[] {
 }
 console.log('====================================');
 console.log('找父亲节点方式');
-console.log(findPid(arr))
-console.log(findPidByObj(arr))
+console.log(findPid(findArr))
+console.log(findPidByObj(findArr))
 console.log('====================================');
 
 /**
@@ -438,22 +438,62 @@ console.log('====================================');
  * 因为 nums[0] + nums[1] = 2 + 7 = 9
  * 所以返回 [0, 1]
  */
-const twoSum = function (nums: number[], target: number) :number[] {
-  let newArr = [0,0]
+/**
+ * 第一种解法
+ * @param nums 
+ * @param target 
+ */
+const twoSumA = function (nums: number[], target: number) :number[] {
+  console.log('两数求和第一种解法')
+  let arr = [0,0] ,flag = false
   for (let i = 0; i < nums.length; i++) {
+    compare(i)
+    if (flag) {
+      arr = [i, compare(i)]
+      break
+    }
+  }
+  /**
+   * @param num 
+   */
+  function compare(index: number) :number {
     for (let j = 0; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        newArr = [i,j]
-        break
+      if (j!== index && nums[index] + nums[j] === target) {
+        flag = true
+        return j
       }
     }
   }
-  return newArr
+  return arr
 }
+/**
+ * 第二种解法
+ */
+const twoSumB = function (nums: number[], target: number) :number[] {
+  let arr = [0,0]
+  console.log('两数求和第二种解法')
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < nums.length; j++) {
+      if (j!== i && nums[i] + nums[j] === target) {
+        return arr = [i,j]
+      }
+    }
+  }
+  return arr
+}
+// 在进行一个数组中两个数得比较中：一定要注意在相加得时候要排除自身去进行相加。
 console.log('=================两数之和算法===================');
-console.log(twoSum([2, 7, 11, 15],22));
+console.log(twoSumA([3,2,4],6))
+console.log(twoSumB([2, 7, 11, 15],9))
 console.log('====================================');
 
+/**
+ * 12：有效得数独
+ * 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+ * 1：数字 1-9 在每一行只能出现一次。
+ * 2：数字 1-9 在每一列只能出现一次
+ * 3：数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+ */
 
 console.warn(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
