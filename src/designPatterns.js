@@ -1,8 +1,8 @@
 /*
 * @Author: mark
 * @Date: 2017-08-30 18:09:03
- * @Last Modified by: mark
- * @Last Modified time: 2018-07-16 11:13:36
+ * @Last Modified by: etf
+ * @Last Modified time: 2018-09-05 21:01:41
 * @description JavaScript设计模式详解 使用ES5语法
 */
 
@@ -30,13 +30,12 @@
  *
  * 在 JavaScript 中，单例作为一个命名空间提供者，从全局命名空间里提供一个唯一的访问点来访问该对象。
  */
-console.warn(
-  "------------------------------------这个是JavaScript设计模式Demo begin------------------------------------"
-);
+console.warn("------------------------------------这个是JavaScript设计模式Demo begin------------------------------------");
 let Singleton = (function() {
-  let instantiated;
+  let instaced;
 
   function init() {
+    console.log('init instance');
     //这里定义单例代码
     return {
       publicMethord: function() {
@@ -45,18 +44,23 @@ let Singleton = (function() {
       publicProperty: "test"
     };
   }
-
   return {
     getInstance: function() {
-      if (!instantiated) {
+      if (!instaced) {
+        console.log('instance does not exit');
         //确保只有一个实例
-        instantiated = init(); //使用init方法，是使publicMethod和publicProperty只在要使用的时候才初始化;
+        instaced = init(); //使用init方法，是使publicMethod和publicProperty只在要使用的时候才初始化;
+      } else {
+        console.log('instance already created');
       }
-      return instantiated;
+      return instaced;
     }
   };
 })();
 /*调用公有的方法来获取实例:*/
+// 第一次调用
+Singleton.getInstance()
+// 第二次调用
 Singleton.getInstance().publicMethord();
 /**
 * 作用和注意事项
@@ -82,9 +86,13 @@ Singleton.getInstance().publicMethord();
 //（1）获取DOM对象
 let $ = function(id) {
   return typeof id === "string" ? document.getElementById(id) : id;
-};
-
+}
 //（2）弹框构造函数
+/**
+ * 构造器
+ * @param {*string} id 
+ * @param {*string} html 
+ */
 let Modal = function(id, html) {
   this.html = html;
   this.id = id;
@@ -95,6 +103,8 @@ let Modal = function(id, html) {
 //（3）open方法
 Modal.prototype.create = function() {
   if (!this.open) {
+    console.log('create modal')
+    // 构建dom
     var modal = document.createElement("div");
     modal.innerHTML = this.html;
     modal.id = this.id;
@@ -113,7 +123,8 @@ Modal.prototype.create = function() {
 //（4）close方法
 Modal.prototype.delete = function() {
   if (this.open) {
-    var modal = $(this.id);
+    // let modal = $(this.id);
+    let modal = document.getElementById(this.id)
     modal.classList.add("hide");
 
     setTimeout(function() {
@@ -138,7 +149,7 @@ let createInstance = (function() {
 利用 || 语法判断如果 instance 不存在则执行后者的实例化 Modal 方法，存在则直接返回 instance，确保了只存在一个弹框实例
 */
 //（6）按钮操作
-var operate = {
+let operate = {
   setModal: null,
   open: function() {
     this.setModal = createInstance();

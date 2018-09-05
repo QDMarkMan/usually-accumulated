@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>单例模式</title>
+  <style>
+    .button{
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      color: #000;
+      width: 80px;
+      margin: 10px;
+      cursor: pointer;
+      display: inline-block;
+      border: 1px solid #575757;
+    }
+    .hide{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="content">
+      <div id="open" class="button">
+        open
+      </div>
+      <div id="delete" class="button">
+        delete
+      </div>
+    </div>
+  </div>
+  <script>
+    let Modal = function(id, html) {
+      this.html = html
+      this.id = id
+      // open很重要
+      this.open = false
+    };
+    Modal.prototype.create = function() {
+      if (!this.open) {
+        console.log('create modal')
+        // 构建DOM
+        const modal = document.createElement("div");
+        modal.innerHTML = this.html;
+        modal.id = this.id;
+        document.body.appendChild(modal);
+
+        setTimeout(function() {
+          modal.classList.add("show");
+        }, 0);
+
+        this.open = true;
+      }
+    }
+    Modal.prototype.delete = function() {
+      if (this.open) {
+        // 首先获取到当前Modal
+        let modal = document.getElementById(this.id);
+        modal.classList.add("hide");
+        // 删除Modal
+        setTimeout(function() {
+          document.body.removeChild(modal);
+        }, 200)
+        // 切换状态
+        this.open = false
+      }
+    }
+    // 创建一个Modal实例
+    let createInstance = (function() {
+      /*
+      使用闭包来保存当前的实例，这个是单例模式中至关重要的一个部分。
+      */
+      let instance
+      return () => {
+        // debugger 用
+        if (instance) {
+          console.log('已经存在实例了')
+        }
+        // 判断当前时候还存在以一个实例，如果存在就返回这个实例，不存在的话就生成一个
+        return instance || (instance = new Modal("modal", `这是一个单例的模态框`));
+      }
+    })()
+    // 操作源对象
+    let operate = {
+      setModal: null,
+      // create &&  open
+      open() {
+        this.setModal = createInstance();
+        this.setModal.create();
+      },
+      //hide && delete
+      delete() {
+        this.setModal ? this.setModal.delete() : "";
+      }
+    }
+    // test
+    document.getElementById('open').onclick = function () {
+      operate.open();
+    }
+    document.getElementById('delete').onclick = function () {
+      operate.delete()
+    }
+  </script>
+</body>
+</html>
