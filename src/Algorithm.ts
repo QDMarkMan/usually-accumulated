@@ -1,8 +1,8 @@
 /*
- * @Author: etf 
+ * @Author: mark 
  * @Date: 2018-05-03 21:57:01 
- * @Last Modified by: etf
- * @Last Modified time: 2018-09-03 16:53:03
+ * @Last Modified by: mark
+ * @Last Modified time: 2018-09-05 10:58:38
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')

@@ -1,8 +1,8 @@
 
 /*
- * @Author: etf 
+ * @Author: mark 
  * @Date: 2018-09-01 23:02:11 
- * @Last Modified by: etf
+ * @Last Modified by: mark
  * @Last Modified time: 2018-09-03 14:34:04
  * JavaScript高阶函数的实现
  */

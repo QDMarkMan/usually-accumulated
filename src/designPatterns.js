@@ -1,7 +1,7 @@
 /*
-* @Author: etf
+* @Author: mark
 * @Date: 2017-08-30 18:09:03
- * @Last Modified by: etf
+ * @Last Modified by: mark
  * @Last Modified time: 2018-07-16 11:13:36
 * @description JavaScript设计模式详解 使用ES5语法
 */
