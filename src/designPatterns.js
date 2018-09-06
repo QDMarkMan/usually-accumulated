@@ -2,7 +2,7 @@
 * @Author: mark
 * @Date: 2017-08-30 18:09:03
  * @Last Modified by: etf
- * @Last Modified time: 2018-09-05 21:01:41
+ * @Last Modified time: 2018-09-06 09:09:34
 * @description JavaScript设计模式详解 使用ES5语法
 */
 
@@ -45,6 +45,7 @@ let Singleton = (function() {
     };
   }
   return {
+    // 为使用者提供类实例
     getInstance: function() {
       if (!instaced) {
         console.log('instance does not exit');

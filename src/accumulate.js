@@ -10,7 +10,7 @@
 /* let get = function(id) {
     return document.getElementById(id);
 } */
-let get = (id) => document.getElementById(id);
+let get = (id) => document.getElementById(id)
 //兼容的事件处理
 let addEvent = function(obj, ev, handler) {
     if (window.attachEvent) {
