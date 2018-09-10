@@ -2,7 +2,7 @@
  * @Author: mark 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-09-06 17:09:32
+ * @Last Modified time: 2018-09-09 21:35:42
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -63,6 +63,7 @@ function bubbleSort(arr: number[]){
 }
 bubbleSort([3,123,6,28,34])
 
+//插入排序算法
 /**
  * 
  * @param {插入排序} arr 
@@ -140,6 +141,9 @@ function binarySearcRecursive(arr: number[], low:number, high: number, target:nu
 }
 const  recursiveRes = binarySearcNoRecursive( [1,2,3,4,5,6,7,8,9,10,11,23,44,86], 3)
 console.log(`二分查找不用循环找到的位置:${recursiveRes}`)
+/**
+ * leet code入门级算法系列
+ */
 console.warn(`leet code 专题开始`)
 /**
  * leet code 算法专题
@@ -195,7 +199,9 @@ function maxProfit(prices: number[]): number {
 /**
  * 解析： 贪心算法
  */
-maxProfit([7,1,5,3,6,4])
+console.log('=================股票最佳购买时机贪心算法===================');
+console.log(maxProfit([7,1,5,3,6,4]));
+console.log('====================================');
 /**
  * 3：  买卖股票的最佳时机
  * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -216,9 +222,9 @@ function maxProfitMore (prices: number[]) :number{
  * 解析： 非贪心算法 
  * 只要下一天的价钱 大于今天的价钱 那我们就卖出当前天的 最终的结果就是我们的利润总和
  */
-console.log('==================股票最佳购买时机==================');
+console.log('==================股票最佳购买时机非贪心算法==================');
 console.log(maxProfitMore([7,1,5,8,3,6,4]))
-console.log('====================================');
+console.log('=============================================');
 
 /**
  * 4： 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
@@ -531,11 +537,12 @@ let board = /* [
 ]
 const isValidSudoku = function (board: string[][]): boolean {
   let isPass = true
+  const sudokuDeep = 9 // 数独深度
   // 判断行和列
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < sudokuDeep; i++) {
     let row:any = {}
     let col:any = {}
-    for (let j = 0; j < 9; j++) {
+    for (let j = 0; j < sudokuDeep; j++) {
       // 判断行
       /**
        * 判断方式
@@ -579,12 +586,65 @@ const isValidSudoku = function (board: string[][]): boolean {
       
     }
   }
-  
   return isPass
 }
 console.log('=================有效数独算法结果===================');
 console.log(isValidSudoku(board))
 console.log('====================================');
 
+/**
+ * 13： 旋转图像
+ * 给定一个 n × n 的二维矩阵表示一个图像。
+ * 将图像顺时针旋转 90 度。
+ * 说明：
+ * ⭐：你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+ * 示例：
+ * 给定：
+ * matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+ * ]
+ * 旋转完
+ * matrix = [
+    [7,4,1],
+    [8,5,2],
+    [9,6,3]
+ * ]
+ */
+const matrix = [
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+]
+// 
+/* const matrix = [
+  [ 5, 1, 9,11],
+  [ 2, 4, 8,10],
+  [13, 3, 6, 7],
+  [15,14,12,16]
+] */
+const rotateMaps = function (matrix:number[][]) {
+  const n = matrix.length
+  // 倒叙循环进行90度的反转
+  for (let i = n-1; i >= 0; i--) {
+    // 新数组补位到原数组中，为了是实现原地的旋转操作，如果不需要
+    for (let j = 0; j < n ; j++) {
+      // console.log(`当前坐标[${i},${j}]`)
+      const current = matrix[i][j]
+      matrix[j].push(current)
+      // 没完成一组的赋值操作，就删除旋转前数组
+      if(j === n - 1) {
+        matrix[i].splice(0, n)
+      }
+    }
+  }
+  console.log(matrix)
+  // return matrix
+}
+
+console.log('================旋转图像算法====================');
+console.log(rotateMaps(matrix));
+console.log('====================================');
 console.warn(`leet code 专题结束`)
 console.warn(' ------------------------------------算法专题end----------------------------------')
