@@ -166,7 +166,7 @@ console.log(strSplit)
  * 如果 length 为 0 或负值，则 substr 返回一个空字符串。如果忽略 length，则 substr 提取字符，直到字符串末尾。
  * start：开始位置
  * length：结束长度
- * @return 修改后的是源字符串
+ * @return 修改后的源字符串
  */
 myString.substr(2,3)
 console.log(myString)

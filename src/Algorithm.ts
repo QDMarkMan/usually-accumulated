@@ -2,7 +2,7 @@
  * @Author: mark 
  * @Date: 2018-05-03 21:57:01 
  * @Last Modified by: etf
- * @Last Modified time: 2018-09-09 21:35:42
+ * @Last Modified time: 2018-09-10 13:52:36
  * 简单的算法专题
  */
 console.warn(' ------------------------------------算法专题begin----------------------------------')
@@ -144,7 +144,7 @@ console.log(`二分查找不用循环找到的位置:${recursiveRes}`)
 /**
  * leet code入门级算法系列
  */
-console.warn(`leet code 专题开始`)
+console.warn(`leet code Array 专题开始`)
 /**
  * leet code 算法专题
  */
@@ -646,5 +646,7 @@ const rotateMaps = function (matrix:number[][]) {
 console.log('================旋转图像算法====================');
 console.log(rotateMaps(matrix));
 console.log('====================================');
-console.warn(`leet code 专题结束`)
+console.warn(`leet code Array 专题结束`)
+
+import './Algorithm_str.ts'
 console.warn(' ------------------------------------算法专题end----------------------------------')
