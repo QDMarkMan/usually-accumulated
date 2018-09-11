@@ -12,7 +12,7 @@ console.warn(' ------------------------------------算法专题begin------------
  * @param {*} a 
  * @param {*} b 
  */
-function swap(arr: number[], a:number, b:number) {
+const swap = function(arr: number[], a:number, b:number) {
   let curr = arr[a]
   arr[a] = arr[b]
   arr[b] = curr
@@ -21,7 +21,7 @@ function swap(arr: number[], a:number, b:number) {
  * 
  * @param {选择排序算法} arr 
  */
-function sort(arr: number[]) {
+const sort = function (arr: number[]) {
   console.time()
   for (let i = 0; i < arr.length; i++) {
     //假设遍历的当前第一个是最小的
@@ -45,7 +45,7 @@ sort([3,6,28,123,34])
  * 
  * @param {*冒泡排序算法} arr 
  */
-function bubbleSort(arr: number[]){
+const bubbleSort = function (arr: number[]){
   console.log('冒泡算法开始时间:')
   console.time()
   for (let i = 0; i < arr.length; i++) {
@@ -68,7 +68,7 @@ bubbleSort([3,123,6,28,34])
  * 
  * @param {插入排序} arr 
  */
-function insertSort(arr: number[]){
+const insertSort = function (arr: number[]){
   console.time()
   for (let i = 0; i < arr.length; i++) {
     // 在一次循环的时候首先缓存下来当前的值和上一个index 缓存上一个index用来比较
@@ -152,8 +152,12 @@ console.warn(`leet code Array 专题开始`)
  * 1 删除排序数组中的重复项
  * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
  * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+ * 示例
+ * 给定数组 nums = [1,1,2], 
+ * 函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。 
+ * 你不需要考虑数组中超出新长度后面的元素。
  */
-function removeDuplicates(nums: number[]): number {
+const removeDuplicates =  function(nums: number[]): number {
   let i: number = 0
   for (let j = 0; j < nums.length; j++) {
     if(nums[j] !== nums[i]) {
@@ -182,8 +186,13 @@ removeDuplicates([0,0,1,1,1,2,2,3,3,4])
  * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
  * 设计一个算法来计算你所能获取的最大利润。你最多可以完成一次交易
  * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）
+ * 
+ * 输入: [7,1,5,3,6,4]
+ * 输出: 7
+ * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。
+ * 随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。
  */
-function maxProfit(prices: number[]): number {
+const maxProfit = function (prices: number[]): number {
   if(prices.length < 2) return 0
   // 定义利润
   let count: number = 0
@@ -208,7 +217,7 @@ console.log('====================================');
  * 设计一个算法来计算你所能获取的最大利润。你可以尽可能多的完成交易
  * 注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）
  */
-function maxProfitMore (prices: number[]) :number{
+const maxProfitMore = function (prices: number[]) :number{
   if(prices.length < 2) return 0
   let ret = 0
   for (let i = 0; i < prices.length; i++) {
@@ -229,11 +238,15 @@ console.log('=============================================');
 /**
  * 4： 给定一个数组，将数组中的元素向右移动 k 个位置，其中 k 是非负数。
  * 要求O(1)的空间复杂度，对原数组进行操作
+ * 
  */
-function rotate(nums: number[], k: number) {
+const rotate = function(nums: number[], k: number) {
+  // 循环k,通过k我们可以确定需要移动的次数
   for (let i = 0; i < k; i++) {
+    // 先在前面插入我们需要移动的地方
     nums.unshift(nums[nums.length -1 - i])
   }
+  // 最后再去处理我们的数组
   nums.splice(nums.length - k, k)
 }
 rotate([1,2,3,4,5,6,7],3)
@@ -242,12 +255,17 @@ rotate([1,2,3,4,5,6,7],3)
  * 5： 存在重复 
  * 给定一个整数数组，判断是否存在重复元素。
  * 如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
+ * 
+ * 这个一定不是最优解
  */
 const containsDuplicate = function (nums: number[]) :boolean{
+    // 设置flag
     let judge = false
+    // 容错判断
     if (nums.length <= 1) {
       return judge
     }
+    // 通过最简单直白的去重的思想去处理
     let current :number[] =[]
     for (let i = 0; i < nums.length; i++) {
       if (current.indexOf(nums[i]) === -1) {
@@ -270,12 +288,15 @@ console.log('====================================');
  */
 const singleNumber = function(nums: number[]) :number {
   let index= -1
+  // 双层进行比对 目的是当前key和数组中的每一个key进行比较
   nums.forEach((key, j)=> {
+    //每次循环小游标
     let count = 0
     for (let k = 0; k < nums.length; k++) {
       if (key === nums[k]) {
         count += 1
       }
+      // 循环完找出符合条件的下标
       if (k === nums.length -1 && count === 1) {
         index = j
       }
@@ -373,52 +394,52 @@ console.log('====================================');
 
 /**
  * 10: 找父亲节点
- * pid为0代表一级，pid如果和pid为0的id相等的话代表二级 以此类推...
+ * fid为0代表一级，fid如果和fid为0的cid相等的话代表二级 以此类推...
  */
 const findArr = [
-  {"pid":0,"id":3,"name":"最外层3"},
-  {"pid":0,"id":4,"name":"最外层4"},
-  {"pid":4,"id":5,"name":"最外层-4"},
-  {"pid":5,"id":6,"name":"最外层-4-1"},
-  {"pid":0,"id":7,"name":"最外层7"},
-  {"pid":7,"id":8,"name":"最外层-7"},
-  {"pid":0,"id":9,"name":"最外层9"},
-  {"pid":9,"id":10,"name":"最外层9-1"},
-  {"pid":9,"id":11,"name":"最外层9-2"},
-  {"pid":11,"id":12,"name":"最外层9-2-1"}
+  {"fid":0,"cid":3,"flag":"最外层3"},
+  {"fid":0,"cid":4,"flag":"最外层4"},
+  {"fid":4,"cid":5,"flag":"最外层-4"},
+  {"fid":5,"cid":6,"flag":"最外层-4-1"},
+  {"fid":0,"cid":7,"flag":"最外层7"},
+  {"fid":7,"cid":8,"flag":"最外层-7"},
+  {"fid":0,"cid":9,"flag":"最外层9"},
+  {"fid":9,"cid":10,"flag":"最外层9-1"},
+  {"fid":9,"cid":11,"flag":"最外层9-2"},
+  {"fid":11,"cid":12,"flag":"最外层9-2-1"}
 ]
 /**
  * 第一种方法：双递归方式
  * @param arr 
  */
-const findPid  = function (arr: any[]): any[] {
+const findfid  = function (arr: any[]): any[] {
   let newArr:any[] = []
   for (let i = 0; i < arr.length; i++) {
-    let flagId = arr[i].id // 取出来一个flag 这个是用于和下一个级别匹配的
+    let flagId = arr[i].cid // 取出来一个flag 这个是用于和下一个级别匹配的
     for (let j = 0; j < arr.length; j++) {
       const elJ = arr[j]
-      if (elJ.pid === flagId) { // pid 和 上级id 匹配
+      if (elJ.fid === flagId) { // fid 和 上级id 匹配
         (arr[i].children = []).push(elJ)
       }
     }
     // 只存入第一等级
-    arr[i].pid === 0 && newArr.push(arr[i])
+    arr[i].fid === 0 && newArr.push(arr[i])
   }
   return newArr
 }
 /**
- * 第二种方法： 使用对象存储id 然后和pid进行对比
+ * 第二种方法： 使用对象存储id 然后和fid进行对比
  * @param arr 
  */
-const findPidByObj = function (arr: any[]): any[] {
+const findfidByObj = function (arr: any[]): any[] {
   let newArr:any[] = []
   let flagObj: any = {}
   arr.forEach(v => {
-    flagObj[v.id] = v
+    flagObj[v.cid] = v
   })
   arr.forEach (item => {
-    // 根据当前遍历对象的pid,去map对象中找到对应索引的id
-    const top = flagObj[item.pid]
+    // 根据当前遍历对象的fid,去map对象中找到对应索引的id
+    const top = flagObj[item.fid]
     if (top) {
       // 如果找到索引，那么说明此项不在顶级当中,那么需要把此项添加到，他对应的父级中
       (top.children || (top.children = [])).push(item)
@@ -431,8 +452,8 @@ const findPidByObj = function (arr: any[]): any[] {
 }
 console.log('====================================');
 console.log('找父亲节点方式');
-console.log(findPid(findArr))
-console.log(findPidByObj(findArr))
+console.log(findfid(findArr))
+console.log(findfidByObj(findArr))
 console.log('====================================');
 
 /**
