@@ -71,4 +71,69 @@ const reverseMath = function (x:number) {
 console.log('=================颠倒整数算法===================');
 console.log(reverseMath(901000));
 console.log('====================================');
+
+/**
+ * 3： 字符串中的第一个唯一字符
+ * 给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+ * 示例：
+ * s = "leetcode"
+ * 返回 0
+ * s = "loveleetcode",
+ * 返回 2.
+ * @param s
+ */
+// 这个方法在字符串很长得情况会超时
+const firstUniqChar = function (s:string) :number {
+  let index = -1
+  if (s === '') {
+    return index = -1
+  }
+  if (s.length === 1) {
+    return index = 0
+  }
+  for (let i = 0; i < s.length; i++) {
+    let countArr = []
+    for (let j = 0; j < s.length; j++) {
+      if (i !== j) {
+        countArr.push(s[j])
+      }
+    }
+    if(countArr.indexOf(s[i]) === -1) {
+      index = i
+      break
+    }
+  }
+  return index
+}
+/**
+ * 优化之后得算法
+ * @param str 
+ */
+const firstUniqCharGood = (str: string):number => {
+  let index = -1
+  if (str === '') {
+    return index = -1
+  }
+  if (str.length === 1) {
+    return index = 0
+  }
+  let obj:any = {}
+  for (let i = 0; i < str.length; i++) {
+    obj[str[i]] ? obj[str[i]]++ : obj[str[i]] = 1
+  }
+  for (const key in obj) {
+    if (obj[key] === 1) {
+      return index = str.indexOf(key)
+    }
+  }
+  return index
+}
+/**
+ * 如果我们使用两个数组去进行对比得话，难免会造性能上得大量开销。所以不合适
+ * 我们使用一个对象去存储每个key出现得个数。第一个出现得1就是这个第一个出现一次得字符串
+ */
+console.log('================字符串中的第一个唯一字符算法====================');
+console.log(firstUniqChar(''))
+console.log(firstUniqCharGood('leetcode'));
+console.log('====================================');
 console.warn('leet code String 专题结束')
