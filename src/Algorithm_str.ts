@@ -136,4 +136,44 @@ console.log('================字符串中的第一个唯一字符算法=========
 console.log(firstUniqChar(''))
 console.log(firstUniqCharGood('leetcode'));
 console.log('====================================');
+/**
+ * 4：有效的字母异位词
+ * 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的一个字母异位词。
+ * 输入: s = "anagram", t = "nagaram"
+ * 输出: true
+ * 输入: s = "rat", t = "car"
+ * 输出: false
+ * 你可以假设字符串只包含小写字母。
+ * 
+ */
+const isAnagram = function (s:string, t:string) :boolean {
+  let objS: any = {}, objT: any = {}
+  let result = true
+  // 首先排除极端情况
+  if (s === "" && t === "") {
+    return result = true
+  }
+  if (s.length !== t.length) {
+    return result = false
+  }
+  // 构建成相应的对象
+  for (let i = 0; i < s.length; i++) {
+    objS[s[i]] ? objS[s[i]] ++ : objS[s[i]] = 1
+    objT[t[i]] ? objT[t[i]] ++ : objT[t[i]] = 1
+  }
+  for (const key in objS) {
+    if (objS[key] !== objT[key]) {
+      return result = false
+    }
+  }
+  return result
+}
+/**
+ * 解析：
+ * 在解答这个之前首先我们要了解什么是字母异位词：长度一样出现的字母一样而且同一字母出现次数也是相同的。
+ */
+console.log('=================有效的字母异位词算法输出===================')
+console.log(isAnagram("anagram", "nagaram"))
+console.log('====================================')
+
 console.warn('leet code String 专题结束')
