@@ -175,5 +175,48 @@ const isAnagram = function (s:string, t:string) :boolean {
 console.log('=================有效的字母异位词算法输出===================')
 console.log(isAnagram("anagram", "nagaram"))
 console.log('====================================')
+/**
+ * 5： 验证回文字符串
+ * 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+ * 说明：本题中，我们将空字符串定义为有效的回文串。
+ * 示例 1:
+ * 输入: "A man, a plan, a canal: Panama"
+ * 输出: true
+ * 示例 2:
+ * 输入: "race a car"
+ * 输出: false
+ */
+const isPalindrome = function (str: string) :boolean {
+  let result = true , current = []
+  const reg = /\d|[a-z]|[A-Z]/g
+  if (str.trim().length === 0 || str.trim().length === 1) {
+    return result = true
+  }
+  // 生成的处理过的字符串
+  if (str.match(reg)) {
+    current = str.match(reg)
+  } else {
+    // 在没有字母或者数字出现的情况下也返回true
+    return result = true
+  }
+  current = current.map(el => {
+    return el = el.toUpperCase()
+  })
+  // 判断reverse之后是否相等
+  if (current.join('') === ((current.reverse()).join(''))) {
+    result = true
+  } else {
+    result = false
+  }
+  return result
+}
+/**
+ * 解析：
+ * 首先回文字符串指定是正着反着读都是一样的字符串，知道了这个剩下的就好办了
+ */
+console.log('=================验证回文字符串算法===================');
+console.log(isPalindrome('A man, a plan, a canal: Panama'))
+console.log('====================================');
+
 
 console.warn('leet code String 专题结束')
