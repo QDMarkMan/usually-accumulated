@@ -5,6 +5,7 @@ const resolve = (dir) => path.resolve(__dirname,dir)
  */
 module.exports = {
     entry: "./src/main.js",
+    mode: "development",
     output: {
         path: __dirname,
         filename: "bundle.js",
@@ -37,7 +38,7 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader'
             }
-          ]
+        ]
     },
     plugins: [
         
