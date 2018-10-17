@@ -339,38 +339,76 @@ console.log('====================================');
   输出: "1211"
  */
 const countAndSay= (n: number) :string => {
-  let str = '1'
-  if ( n === 1) return str = '1'
-  for (let i = 2; i <= n; i++) {
-    let temp = '' // 临时字符串
-    const tempArr = str.split('') // 临时数组
-    for (let j = 0; j < tempArr.length; j++) {
-      let repeat = 0
-      /* if (str[j + 1] === str[j]) {
-        // repeat ++
-        temp += `2${str[j]}`
-        tempArr.splice(j+1, 1)
+  let str:string = '1'
+  for (let i = 1; i < n; i++) {
+    let temp: string = '' // 临时字符串
+    let repeatFlag: number = 1 // 重复次数
+    // **** 生成字符串 ⭐⭐⭐ 核心部分  ****// 
+    for (let j = 0; j < str.length; j++) {
+      if (str[j] === str[j + 1]) {
+        repeatFlag ++ // 如果时重复的 那么就进行flag的增肌操作
       } else {
-        temp += `1${str[j]}`
-      } */
-      if(tempArr[j] === tempArr[repeat]) {
-        repeat ++
-        if (repeat === tempArr.length) {
-          temp += `${repeat}${tempArr[repeat]}`
-        }
-      } else {
-        temp += `${repeat + 1}${tempArr[repeat]}`
-        tempArr.slice(j)
-        repeat = 0
+        // 不是重复的就生成这部分字符串
+        temp += `${repeatFlag}${str[j]}`
+        repeatFlag = 1
       }
-      console.log(temp)
     }
-    console.log(`${i} =======> ${temp}`)
+    // ****                            ****// 
+    // 可进行本轮赋值
     str = temp
   }
   return str
 }
+/**
+ * 解析
+ * ===> 这个里面我们这里要理解它生成下一个机制，主要时依赖上一个生成的字符串来生成下一个。理解了这个基本就没什么难度了
+ */
 console.log('================实现报数算法====================');
 console.log(countAndSay(6))
+console.log('====================================');
+
+/**
+ * 9: 最长公共前缀
+ * 编写一个函数来查找字符串数组中的最长公共前缀。
+ * 如果不存在公共前缀，返回空字符串 ""。
+ * 示例 1:
+ * 输入: ["flower","flow","flight"]
+ * 输出: "fl"
+ * 示例 2:
+ * 输入: ["dog","racecar","car"]
+ * 输出: ""
+ * 解释: 输入不存在公共前缀。
+ */
+const longestCommonPrefix = (strs: string[]): string => {
+  let str: string = ""
+  if (strs.length === 0) {
+    return str = ""
+  }
+  let firstStr = strs[0]
+  for (let i = 0; i < firstStr.length; i++) {
+    let flag = true // 当前位是否全部一样标识
+    for (let j = 0; j < strs.length; j++) {
+      if (strs[j][i] !== firstStr[i]) {
+        flag = false
+      }
+    }
+    if (i === 0 && !flag) {
+      return str = ""
+    } 
+    if (flag){
+      str += firstStr[i]
+    }
+  }
+  return str
+}
+/**
+ * 解析：这个没什么可说的，但是要注意两点
+ * 1：空数组要注意拦截
+ * 2：字符串的第一位要单独拿出来处理
+ */
+console.log('===============最长公共前缀输出=====================');
+console.log(longestCommonPrefix(["flower","flow","flight"]))
+console.log(longestCommonPrefix(["dog","racecar","car"]))
+console.log(longestCommonPrefix(["aca","cba"]))
 console.log('====================================');
 console.warn('leet code String 专题结束')
