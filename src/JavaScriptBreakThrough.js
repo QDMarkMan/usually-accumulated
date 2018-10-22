@@ -75,13 +75,4 @@ console.log(count);
 var returnNode = node.appendChild(secChild)
 console.log(returnNode == secChild);  
 
-
-
-
-
-
-
-
-
-
 console.warn("------------------------------------这个是JavaScript闯关记Demo end------------------------------------");

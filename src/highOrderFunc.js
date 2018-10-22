@@ -2,8 +2,8 @@
 /*
  * @Author: mark 
  * @Date: 2018-09-01 23:02:11 
- * @Last Modified by: mark
- * @Last Modified time: 2018-09-03 14:34:04
+ * @Last Modified by: etongfu
+ * @Last Modified time: 2018-10-19 14:28:18
  * JavaScript高阶函数的实现
  */
 /**
@@ -149,10 +149,10 @@ const throttle = function (fn, interval = 500) {
     }
     // 设置timer
     timer = setTimeout(function (){
-     console.log(timer)
-     window.clearTimeout(timer)
-     timer = null
-     fn.apply(_me, args)
+      console.log(timer)
+      window.clearTimeout(timer)
+      timer = null
+      fn.apply(_me, args)
     }, interval)
   }
 }

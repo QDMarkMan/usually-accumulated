@@ -159,8 +159,8 @@ oBtn.onclick = function() {
 function createCounter () {
     let count = 0
     const myFunction = function() {
-      count = count + 1 
-      return count
+        count = count + 1 
+        return count
     }
     return myFunction
   }

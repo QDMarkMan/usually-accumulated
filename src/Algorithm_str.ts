@@ -187,7 +187,7 @@ console.log('====================================')
  * 输出: false
  */
 const isPalindrome = function (str: string) :boolean {
-  let result = true , current = []
+  let result:boolean = true , current:RegExpMatchArray = []
   const reg = /\d|[a-z]|[A-Z]/g
   if (str.trim().length === 0 || str.trim().length === 1) {
     return result = true
@@ -384,9 +384,9 @@ const longestCommonPrefix = (strs: string[]): string => {
   if (strs.length === 0) {
     return str = ""
   }
-  let firstStr = strs[0]
+  let firstStr:string = strs[0]
   for (let i = 0; i < firstStr.length; i++) {
-    let flag = true // 当前位是否全部一样标识
+    let flag:boolean = true // 当前位是否全部一样标识
     for (let j = 0; j < strs.length; j++) {
       if (strs[j][i] !== firstStr[i]) {
         flag = false
