@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-10-19 17:33:59 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-10-22 16:56:14
+ * @Last Modified time: 2018-10-23 15:07:00
  * closure
  */
 console.warn(' ------------------------------------我眼中的闭包begin----------------------------------')
@@ -98,5 +98,28 @@ method.increment()
 method.increment()
 console.log(method.value())         // 1
 
-
+// 闭包中常见的注意点
+const num = 10
+let arr = []
+for (var i = 0; i < num; i++) {
+  arr[i] = function () {
+    console.log(i)
+  }
+}
+for (let i = 0;  i < num; i++) {
+  arr[i]()
+}
+// 修改后的代码
+let funs = []
+for (var j = 0; j < num; j++) {
+  funs[j] = (function(){
+    let i = j
+    return function () {
+      console.log(i)
+    }
+  })()
+}
+for (let i = 0;  i < num; i++) {
+  funs[i]()
+}
 console.warn(' ------------------------------------我眼中的闭包end----------------------------------')
