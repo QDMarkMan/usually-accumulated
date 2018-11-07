@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-07 16:02:30
+ * @Last Modified time: 2018-11-07 16:32:04
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -32,7 +32,7 @@ console.log(!sym) // false
 let sfor1 = Symbol.for('string')
 let sfor2 = Symbol.for('string')
 console.log(sfor1 === sfor2) // true
-console.log(Symbol.keyFor(sfor1))
+console.log(Symbol.keyFor(sfor1)) // string
 // 当作键名来使用
 let objSymbol = Symbol()
 let obj1 = {}
