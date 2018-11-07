@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-06 15:58:46
+ * @Last Modified time: 2018-11-07 16:02:30
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -28,7 +28,11 @@ console.log(s3) // Symbol([object Object])
 let sym = Symbol()
 console.log(Boolean(sym)) // true
 console.log(!sym) // false
-
+//symbol.for
+let sfor1 = Symbol.for('string')
+let sfor2 = Symbol.for('string')
+console.log(sfor1 === sfor2) // true
+console.log(Symbol.keyFor(sfor1))
 // 当作键名来使用
 let objSymbol = Symbol()
 let obj1 = {}
@@ -61,6 +65,32 @@ function getComputed (color) {
   }
 }
 console.log(getComputed(RED)) // Symbol(red)
+// 魔术字符串
+/* function getArea(shape, options) {
+  let area = 0;
+
+  switch (shape) {
+    case 'Triangle': // 魔术字符串
+      area = .5 * options.width * options.height;
+      break;
+  }
+  return area;
+}
+getArea('Triangle', { width: 100, height: 100 }); // 魔术字符串 */
+// 使用Symbol代替
+const symbolType = {
+  triangle: Symbol('triangle')
+}
+function getArea (shape, options) {
+  let a = 0
+  switch (shape) {
+    case symbolType.triangle:
+     a =  options.width * options.height
+    break
+  }
+  return a
+}
+getArea(symbolType.triangle, {width: 100, height: 100})
 
 // 循环遍历
 const symObj = {
