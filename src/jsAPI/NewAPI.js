@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-07 16:32:04
+ * @Last Modified time: 2018-11-08 16:48:12
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -120,4 +120,110 @@ const allKeys = {
   num: 1
 }
 console.log(Reflect.ownKeys(allKeys)) // ["num", Symbol(key)]
+
+
+// Set And Map
+// Map
+// Map的基本使用
+const map = new Map()
+const mapObj = {m: 'map'}
+map.set(mapObj, 'this is value')
+console.log(map.get(mapObj)) // this is value
+
+console.log(map.has(mapObj)) // true
+console.log(map.delete(mapObj)) // true
+console.log(map.has(mapObj)) // fasle
+// 数组入参
+const arrMap = new Map([
+  ['name', 'arr'],
+  ['title', 'map']
+])
+console.log(arrMap.has('name'))
+console.log(arrMap.get('name')) // arr
+console.log(arrMap.get('title'))// map
+// 语法趟
+const arr = [
+  ['name', '张三'],
+  ['title', 'Author']
+]
+let map2 = new Map()
+arr.forEach(
+  ([key, value]) => map2.set(key, value)
+)
+console.log(map2) // Map(2) {"name" => "张三", "title" => "Author"}
+// set和map作为构造函数
+const mapSet = new Set([
+  ['foo', 1],
+  ['bar', 2]
+])
+const setMap = new Map(mapSet)
+console.log(setMap) // Map(2) {"foo" => 1, "bar" => 2}
+const mapMap = new Map([['name', 'mapMap']]) 
+const mapMap2 = new Map(mapMap)
+console.log(mapMap2) // Map(1) {"name" => "mapMap"}
+// 键的引用问题
+const b = ['b']
+const refMap = new Map()
+refMap.set(['a'], 555)
+refMap.set(b, '指向同一地址')
+console.log(refMap);
+console.log(refMap.get(['a'])) // undefined
+console.log(refMap.get(b)) // 指向同一地址
+// Map属性
+console.log(refMap.size) // 2
+
+// 遍历
+const forMap = new Map([
+  ['for', 'no'],
+  ['map',  'yes'],
+])
+// key
+for (const key of forMap.keys()) {
+  console.log(key) // for map
+}
+for (const key of forMap.values()) {
+  console.log(key) // no yes
+}
+for (const key of forMap.entries()) {
+  console.log(key) //  ["for", "no"] ["map", "yes"]
+}
+// 结构显示
+for (let [key, value] of forMap.entries()) {
+  console.log(key, value) // for no, map yes
+}
+// forEach
+forMap.forEach(function(value, key, map) {
+  console.log("Key: %s, Value: %s", key, value);
+},this) // Key: for, Value: no  , Key: map, Value: yes
+
+// 数据结构间的转换
+const mapToArr = [...forMap]
+console.log(mapToArr) // ) [Array(2), Array(2)]
+// 对象和Map
+function mapToObject(map) {
+  let obj = {}
+  for (const [k, v] of map.entries()) {
+    obj[k] = v
+  }
+  return obj
+}
+console.log(mapToObject(forMap)) // {for: "no", map: "yes"}
+function objToMap(object) {
+  const map = new Map()
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
+      map.set(key, object[key])
+    }
+  }
+  return map
+}
+console.log(objToMap({ka:'va', kb: 'vb'})) // Map(2) {"ka" => "va", "kb" => "vb"}
+// JSON和MAP
+// 2 数组json
+let jsonMap = new Map().set(true, 7).set({foo: 3}, ['abc'])
+function mapToJson (map) {
+  return JSON.stringify([...map])
+}
+console.log(mapToJson(jsonMap)) // [[true,7],[{"foo":3},["abc"]]]
+
 console.warn('ES6中新API专题结束')
