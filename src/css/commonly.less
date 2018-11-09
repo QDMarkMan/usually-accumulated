@@ -1,0 +1,37 @@
+/*
+ * @Author: etongfu 
+ * @Date: 2018-11-09 09:26:28 
+ * @Last Modified by: etongfu
+ * @Last Modified time: 2018-11-09 09:47:09
+  常用CSS样式积累
+ */
+// 跳跃加载动画
+.bouncing-loader{
+  display: flex;
+  justify-content: center;
+  .loader{ 
+    width: 1rem;
+    height: 1rem;
+    margin: 3rem .2rem;
+    background-color: #8385aa;
+    border-radius: 50%;
+    animation: bouncing .6s infinite alternate;
+    &:nth-child(2) {
+      animation-delay: .2s;
+    }
+    &:nth-child(3) {
+      animation-delay: .4s;
+    }
+  }
+}
+// 动画
+@keyframes bouncing {
+  from {
+    opacity: 1;
+    transform: translateY(0)
+  }
+  to {
+    opacity: 0.1;
+    transform: translateY(-1rem)
+  }
+}

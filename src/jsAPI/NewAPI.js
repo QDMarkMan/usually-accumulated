@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-08 16:48:12
+ * @Last Modified time: 2018-11-09 10:09:59
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -225,5 +225,25 @@ function mapToJson (map) {
   return JSON.stringify([...map])
 }
 console.log(mapToJson(jsonMap)) // [[true,7],[{"foo":3},["abc"]]]
+// weakMap
+let weakObj = {
+  a: 1
+}
+const weakMap = new WeakMap()
+weakMap.set(weakObj, 1)
+console.log(weakMap.get(weakObj)) //  1
+weakObj = null
+console.log(weakMap.get(weakObj)) //  undefined 这个key会跟着weakObj的销毁而销毁
+//但是值却不被影响
+let valueObj = {
+  a: '我是 value object key'
+}
+let value = {
+  a: 'value '
+}
+weakMap.set(valueObj, value)
+console.log(weakMap.get(valueObj)) // {a: "value "}
+value = null
+console.log(weakMap.get(valueObj)) // {a: "value "} 
 
 console.warn('ES6中新API专题结束')
