@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-09 10:09:59
+ * @Last Modified time: 2018-11-13 16:45:47
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -123,6 +123,69 @@ console.log(Reflect.ownKeys(allKeys)) // ["num", Symbol(key)]
 
 
 // Set And Map
+// set
+const set1 = new Set([1,2,2,3,3,3,3])
+console.log(set1) // Set(3)
+const arrayLikes = document.getElementsByTagName('div')
+console.log(arrayLikes) // HTMLCollection
+const set2 = new Set(arrayLikes)
+console.log(set2.size) // 27
+// 先创建set
+const setFirst = new Set()
+const setArr = [1,2,3,1,12,3,4,3,4,3,4]
+setArr.forEach(element => {
+  setFirst.add(element)
+})
+console.log(setFirst) //  Set(5) {1, 2, 3, 12, 4}
+// Api操作示例
+let setMethod = new Set()
+setMethod.add(1).add(2).add(2) // Set(2) {1, 2}
+console.log(setMethod) // 
+setMethod.has(1) // true
+setMethod.delete(1) //
+console.log(setMethod) // Set(1) {2}
+setMethod.clear() 
+console.log(setMethod) // Set(0) {}
+// 遍历方法
+let setFor = new Set(['red', 'green', 'blue'])
+console.log(setFor.keys()) // SetIterator {"red", "green", "blue"}
+for (const iterator of setFor.keys()) {
+  console.log(iterator) // red green blue
+}
+console.log(setFor.values()) // SetIterator {"red", "green", "blue"}
+for (const iterator of setFor.values()) {
+  console.log(iterator) // red green blue
+}
+console.log(setFor.entries())
+for (const iterator of setFor.entries()) {
+  // entries方法返回的遍历器，同时包括键名和键值，所以每次输出一个数组，它的两个成员完全相等。
+  console.log(iterator) //  ["red", "red"] ["green", "green"] ["blue", "blue"]
+}
+// forEach 方法
+setFor.forEach((value, key) => console.log(key + ' : ' + value))
+// set的应用
+// arrary.from转化
+const setArrays = new Set([1, 2, 3, 4, 5])
+let arraySets = Array.from(setArrays)
+console.log(arraySets) // [1, 2, 3, 4, 5]
+// 配合`...`展开运算符快速去重。
+let numbers = [1,2,1,1,23,4,12,1,1]
+console.log([...new Set(numbers)])// [1, 2, 23, 4, 12]
+//求两个数组的集合
+const arrayA = [1,2,3], arrayB= [2,3,4]
+let setA = new Set(arrayA), setB = new Set(arrayB)
+// 并集
+const union = new Set(arrayA.concat(arrayB))
+console.log(union) //  Set(4) {1, 2, 3, 4}
+// 交集
+const intersect = new Set(arrayA.filter(x => setB.has(x)))
+console.log(intersect) // Set(2) {2, 3}
+// 差集
+const differenceA = arrayA.filter(x => !setB.has(x))
+const diefferenceB = arrayB.filter(x => !setA.has(x))
+const difference = new Set([...differenceA, ...diefferenceB])
+console.log(difference) // set(2) {1, 4}
+
 // Map
 // Map的基本使用
 const map = new Map()
