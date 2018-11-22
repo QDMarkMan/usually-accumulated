@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-13 16:45:47
+ * @Last Modified time: 2018-11-22 14:07:58
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -308,5 +308,188 @@ weakMap.set(valueObj, value)
 console.log(weakMap.get(valueObj)) // {a: "value "}
 value = null
 console.log(weakMap.get(valueObj)) // {a: "value "} 
+// Proxy
+// 下面代码对一个空对象架设了一层拦截，重定义了属性的读取（get）和设置（set）行为
+const proxyObj = new Proxy({}, {
+  /**
+   * 读取行为
+   * @param {*目标对象} target
+   * @param {*目标key} key 
+   * @param {*接收对象(Symbol值)} receiver 
+   */
+  get (target, key, receiver) {
+    console.log(target) // {count: 1}
+    console.log(`getting ${key}!`); // getting count!
+    return Reflect.get(target, key, receiver);
+  },
+  /**
+   * 设置行为
+   * @param {*目标对象} target 
+   * @param {*属性名} key 
+   * @param {*设置value} value 
+   * @param {*proxy实例本身(Symbol)} receiver 
+   */
+  set (target, key, value, receiver) {
+    console.log(target) // {}
+    console.log(receiver) // Proxy {}
+    console.log(`getting ${key} ${value}!`);
+    return Reflect.set(target, key, value, receiver);
+  }
+})
+proxyObj.count = 1 // getting count 1!
+console.log(proxyObj.count) // 1
+// 更实际的拦截
+const objForPro1 = {
+  a: 1
+}
+const proxyObj1 = new Proxy(objForPro1, {
+  set (target, key) {
+    return 1
+  }
+})
+// 拦截针对的是Proxy对象！
+proxyObj1.a = 4
+proxyObj1.a = 5
+console.log(proxyObj1.a) // 1
+// 如果handler没有设置任何拦截，那就等同于直接通向原对象。
+const proxyObj2 = new Proxy(objForPro1, {})
+proxyObj2.a = 2
+console.log(proxyObj2.a) // 2
+
+// Proxy 实例也可以作为其他对象的原型对象。
+const objByProxy = Object.create(proxyObj2)
+console.log(objByProxy.a) // 2
+
+// 同一个拦截器函数，设置拦截多个操作。
+const mutiHandle = {
+  get (target, name) {
+    if (name === 'prototype') {
+      return Object.prototype
+    }
+    console.log(`Hello ${name}`);
+    return `Hello ${name}`
+  },
+  /**
+   * 自定义apply 函数
+   * @param {*目标对象} target 
+   * @param {*目标this} thisBinding 
+   * @param {*参数数组} args 
+   */
+  apply (target,thisBinding, args) {
+    console.log(`rewrite call && args  = ${[...args]}`);
+    return args[0]
+  },
+  /**
+   * 自定义构造器函数
+   * @param {*} target 
+   * @param {*} args 
+   */
+  construct (target, args) {
+    console.log(`rewrite construct && args  = ${[...args]}`);
+    return {value: args[1]}
+  }
+}
+let proxyObj3 = new Proxy(function(x, y) {
+  return x + y
+}, mutiHandle)
+console.log(proxyObj3(1,2))// call： 调用函数被拦截 rewrite call && args  = 1,2
+console.log(new proxyObj3(1, 2)) // {value: 2}  rewrite construct && args  = 1,2
+console.log(proxyObj3.prototype === Object.prototype) // true 因为我们拦截了get 
+console.log(proxyObj3.a === "Hello a") // true 因为我们同时也拦截了value
+
+// proxy实例的的方法
+// get方法的继承
+let proto = new Proxy({}, {
+  get (target, key) {
+    console.log('GET ' + key)
+    return target[key]
+  }
+})
+let proxyObj4 = Object.create(proto) // proxyObj4直接继承了proto中的get 方法
+proxyObj4.foo // foo 
+// get 根据复索引取值
+function createArr (...args) {
+  let handler = {
+    get (target, key, receiver) {
+      const index = Number(key)
+      // 构建真实的key
+      if (key < 0) {
+        key = String(target.length + index);
+      }
+      // Reflect以后再说
+      return Reflect.get(target, key, receiver)
+    }
+  }
+  let target = []
+  target.push(...args)
+  // 返回一个被proxy拦截的数组对象
+  return new Proxy(target, handler);
+}
+const proxyArr = createArr('a','b', 'c', 'd')
+console.log(proxyArr[-1]) // d 
+// 如果目标对象自身的某个属性，不可写且不可配置，那么set方法将不起作用。
+const readObj = {}
+// 又是一种设置只读属性的方法
+Object.defineProperty(readObj, 'name', {
+  value: 'readOnly',
+  writable: false,
+})
+const uselessHandle = {
+  set (target, key, value, receiver) {
+    target[key] = 'set by proxy'
+  }
+}
+const uselessProxy = new Proxy(readObj, uselessHandle)
+// uselessProxy.name = 'proxy' // Cannot assign to read only property 'name' of object '#<Object>
+console.log(uselessProxy.name)// readOnly
+// 简单的apply()
+let applyFunc = function() {console.log(`I am target function`)}
+const applyProxy = new Proxy(applyFunc, {
+  /**
+   * @param {*} target 
+   * @param {*} targetThis 
+   * @param {*} args 
+   */
+  apply (target, targetThis, args) {
+    console.log(`i am proxy`)  
+  }
+})
+applyProxy() // i am proxy
+// 使用has() 隐藏部分属性
+const hasHandle = {
+  /**
+   * 隐藏“_”开头的属性
+   * @param {*} target 
+   * @param {*} key 
+   */
+  has (target, key) {
+    if (key[0] === '_') {
+      return false
+    }
+    return key in target
+  }
+}
+let hasObj = {name: 'has', _age: 'private'}
+let hasProxy = new Proxy(hasObj, hasHandle)
+console.log('_age' in hasProxy) // false
+// 不可扩展的时候使用has会报错
+let noHasObj = {a: 1}
+Object.preventExtensions(noHasObj) // 禁止扩展
+const noHasProxy = new Proxy(noHasObj, {
+  has: function(target, prop) {
+    return false
+  }
+})
+// console.log('a' in noHasProxy) // Uncaught TypeError: 'has' on proxy: trap returned falsish for property 'a' but the proxy target is not extensible
+// has对for in 循环是不起作用的
+for (const key in hasProxy) {
+  console.log(key)// name _age
+}
+
+
+
+
+
+
 
 console.warn('ES6中新API专题结束')

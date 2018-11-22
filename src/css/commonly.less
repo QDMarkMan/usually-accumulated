@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-09 09:26:28 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-09 09:47:09
+ * @Last Modified time: 2018-11-13 17:13:07
   常用CSS样式积累
  */
 // 跳跃加载动画
@@ -33,5 +33,20 @@
   to {
     opacity: 0.1;
     transform: translateY(-1rem)
+  }
+}
+// 等宽高比
+.constant-width-to-height-ratio{
+  background-color: #333;
+  width: 50%;
+  &::before {
+    content: '';
+    padding-top: 100%; // 这个百分比相对的是当前元素宽度的百分比。 因此表示元素的高度始终为100% 的宽度，创建一个响应正方形。
+    float: left;
+  }
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
   }
 }
