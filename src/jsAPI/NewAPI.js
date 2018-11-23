@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-22 14:07:58
+ * @Last Modified time: 2018-11-23 10:52:26
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -485,11 +485,40 @@ const noHasProxy = new Proxy(noHasObj, {
 for (const key in hasProxy) {
   console.log(key)// name _age
 }
-
-
-
-
-
-
+// construct 拦截
+let newProxy = new Proxy(function () {
+  console.log(`old construct`)
+}, {
+  /**
+   * @param {*目标对象} target 
+   * @param {*参数列表} args 
+   * @param {*new命令作用的构造函数（例子中的newProxy）} newTarget 
+   */
+  construct: function(target, args, newTarget) {
+    console.log(target)
+    console.log('proxy construct called: ' + args.join(', '));
+    console.log(newTarget)
+    return { value: args[0] * 10 };
+  }
+})
+let proxyValue = new newProxy(1)
+console.log(proxyValue.value) // 10
+// delete操作符拦截
+let deleteObj = {
+  ok: 'ok',
+  _no: 'no'
+}
+const deleteProxy = new Proxy(deleteObj, {
+  /**
+   * @param {*} target 
+   * @param {*} key 
+   */
+  deleteProperty (target, key) {
+    if (key[0] === '_') {
+      throw new Error(`Invalid attempt to private "${key}" property`);
+    }
+  }
+})
+delete deleteProxy._no //报错
 
 console.warn('ES6中新API专题结束')
