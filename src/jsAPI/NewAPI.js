@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-23 10:52:26
+ * @Last Modified time: 2018-11-27 16:48:58
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -519,6 +519,68 @@ const deleteProxy = new Proxy(deleteObj, {
     }
   }
 })
-delete deleteProxy._no //报错
+// delete deleteProxy._no //报错
+// 拦截Object.defineProperty
+const defineHandle = {
+  /**
+   * @param {*} target 
+   * @param {*} key 
+   * @param {*修饰符} descriptor 
+   */
+  defineProperty  (target, key, descriptor) {
+    console.log(descriptor) // {value: "demo", writable: true, enumerable: true, configurable: true}
+    return false
+  }
+}
+const defineProxy = new Proxy({}, defineHandle)
+// defineProxy.demo = 'demo' // 不会生效
+// 拦截getOwnPropertyDescriptor
+const getOwn = {
+  getOwnPropertyDescriptor (target, key) {
+    if (key[0] === '_') {
+      return;
+    }
+    return Object.getOwnPropertyDescriptor(target, key)
+  }
+}
+let ownTaget = {
+  _foo: 'foo',
+  bar: 'bar'
+}
+const ownProxy = new Proxy(ownTaget, getOwn)
+console.log(Object.getOwnPropertyDescriptor(ownProxy, '_foo'))// undefined
+console.log(Object.getOwnPropertyDescriptor(ownProxy, 'bar'))// {value: "bar", writable: true, enumerable: true, configurable: true}
+
+// getPrototypeOf()拦截
+let protoObj = {
+  name: 'protoObj'
+}
+const protoProxy = new Proxy({}, {
+  getPrototypeOf (target) {
+    console.log('protoObj be proxyed')
+    return protoObj
+  }
+})
+console.log(Object.getPrototypeOf(protoProxy) === protoObj)// true
+
+// 拦截Object.isExtensible（检测对象是否可扩展）
+let extendObj = {}
+const extendProxy = new Proxy(extendObj, {
+  isExtensible (target) {
+    console.log("call isExtensible proxy")
+    return true
+  }
+})
+Object.isExtensible(extendProxy)
+// 拦截preventExtensions操作
+const preventExtHandle = {
+  preventExtensions(target) {
+    console.log('you will preventExtensions target')
+    Object.preventExtensions(target)
+    return true
+  }
+}
+let preventExtPro = new Proxy({}, preventExtHandle)
+Object.preventExtensions(preventExtPro)
 
 console.warn('ES6中新API专题结束')
