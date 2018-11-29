@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-27 16:48:58
+ * @Last Modified time: 2018-11-29 17:39:07
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -582,5 +582,144 @@ const preventExtHandle = {
 }
 let preventExtPro = new Proxy({}, preventExtHandle)
 Object.preventExtensions(preventExtPro)
+// 拦截ownKeys
+let keysObj = {
+  a: 'a',
+  b: 'b',
+  c: 'c',
+  _d: 'd'
+}
+let keysProxy = new Proxy(keysObj, {
+  /**
+   * 拦截只返回a
+   * @param {*} target 
+   */
+  ownKeys(target) {
+    return ['a']
+  }
+})
+for (const key in keysProxy) {
+  console.log(key) // a
+}
+// Object.keys的特殊情况
+let keySymbol = Symbol('symbol')
+let keysFilterObj = {
+  name: 'name',
+  [keySymbol]: 'symbol'
+}
+// 不可枚举属性
+Object.defineProperty(keysFilterObj, 'enumerabled', {
+  enumerable: false,
+  configurable: true,
+  writable: true,
+  value: 'enumerabled'
+})
+let keysFilteProxy = new Proxy(keysFilterObj, {
+  ownKeys (target) {
+    return ['name', keySymbol, 'enumerabled']
+  }
+})
+console.log(Object.keys(keysFilteProxy)) // ["name"]
+// ownKeys拦截getOwnPropertyNames 方法返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括Symbol值作为名称的属性）组成的数组。
+console.log(Object.getOwnPropertyNames(keysFilteProxy)) // ["name", "enumerabled"]
+
+// 拦截setPrototypeOf 
+let setProtObj = {
+  foo: 'foo'
+}
+const setProtProxy = new Proxy(setProtObj, {
+  setPrototypeOf (target) {
+    console.log(`called setPrototypeOf`)
+    return true // 只能返回boolean值
+  }
+})
+// Object.setPrototypeOf(obj, prototype)
+Object.setPrototypeOf(setProtProxy, Array)
+
+// 返回一个可取消的 Proxy 实例
+
+let {proxy, revoke} = Proxy.revocable({bar: 'bar'}, {})
+console.log(proxy) // Proxy {} proxy实例
+console.log(revoke) // 取消proxy的函数
+proxy.foo = 'foo'
+console.log(proxy.bar)
+console.log(proxy.foo)
+revoke()
+// console.log(proxy.bar) // Cannot perform 'get' on a proxy that has been revoked 此时代理被取消，所以proxy实例对象中已经没有不存在了
+
+
+// Relfact
+//Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而Reflect.defineProperty(obj, name, desc)则会返回false。
+// 没有 Relfact
+/* try {
+  Object.defineProperty(target, property, attributes);
+} catch (error) {
+  console.log(error)
+} 
+// 使用Relfact
+if ( Reflect.defineProperty(target, property, attributes)) {
+  console.log(true)
+} else {
+  console.log(false)
+} */
+
+
+// 让Object操作都变成函数行为。
+// 某些Object操作是命令式，比如name in obj和delete obj[name]，而Reflect.has(obj, name)和Reflect.deleteProperty(obj, name)让它们变成了函数行为。
+let relfactObj = {
+  name: 'Reflect'
+}
+// old 
+console.log('name' in relfactObj)
+// Reflect
+console.log(Reflect.has(relfactObj, 'name'));
+// 与proxy配合
+let logObj = new Proxy(relfactObj, {
+  get (target, name) {
+    console.log('get ', target, name)
+    return Reflect.get(target, name)
+  },
+  deleteProperty (target, name) {
+    console.log('delete ', target, name)
+    return Reflect.deleteProperty(target, name)
+  },
+  has(target, name) {
+    console.log('has ' + name)
+    return Reflect.has(target, name)
+  }
+})
+
+console.log('name' in logObj)// true  has name
+console.log(logObj.name)// get  {name: "Reflect"} name  Reflect
+// 替代new操作符
+let ReflectCons = function (name) {
+  this.name = name
+}
+const consReflect = Reflect.construct(ReflectCons, ['ReflectCons'])
+console.log(consReflect.name)
+// Reflect.set
+// 如果 Proxy对象和 Reflect对象联合使用，前者拦截赋值操作，后者完成赋值的默认行为，而且传入了receiver，那么Reflect.set会触发Proxy.defineProperty拦截。
+let setReObj = {
+  name: 'setReObj'
+}
+const setReProxy = new Proxy (setReObj, {
+  set (target, name, value, receiver) {
+    console.log('set')
+    Reflect.set(target, name, value, receiver)
+    return true
+  },
+  defineProperty (target, key , attribute) {
+    console.log('defineProperty');
+    Reflect.defineProperty(target, key, attribute);
+  }
+})
+setReProxy.name = 'aaa'
+
+// Reflect.ownKeys(target)
+const keysReflect = {
+  [Symbol('key')] : 'key',
+  key: 'keykey'
+}
+console.log(Reflect.ownKeys(keysReflect)) // ["key", Symbol(key)]
 
 console.warn('ES6中新API专题结束')
