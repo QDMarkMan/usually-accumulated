@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "babel-loader": "^7.1.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-es2015": "^6.24.1",
     "css-loader": "^0.28.11",
     "less": "^2.7.3",

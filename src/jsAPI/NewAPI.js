@@ -2,7 +2,7 @@
  * @Author: etongfu 
  * @Date: 2018-11-06 14:37:11 
  * @Last Modified by: etongfu
- * @Last Modified time: 2018-11-29 17:39:07
+ * @Last Modified time: 2018-11-30 16:36:40
  * ES6 中新特性
  */
 console.warn('ES6中新API专题开始')
@@ -722,4 +722,14 @@ const keysReflect = {
 }
 console.log(Reflect.ownKeys(keysReflect)) // ["key", Symbol(key)]
 
+// Decorator
+@testable
+class MyTestableClass {
+  // ...
+}
+function testable(target) {
+  target.isTestable = true;
+  console.log(`call Decorator`)
+}
+console.log(MyTestableClass.isTestable)// true
 console.warn('ES6中新API专题结束')
