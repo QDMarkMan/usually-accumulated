@@ -5,6 +5,7 @@ import '@/Algorithm.ts'
 import '@/highOrderFunc.js' //高阶函数
 import '@/closure.js'// 闭包简单demo
 import '@/class.js'// 闭包简单demo
+import '@/ease_promise' // 简单promise
 
 import 'TS'
 import 'API'
