@@ -3,7 +3,7 @@
  * @Email: 13583254085@163.com
  * @Date: 2019-02-15 10:38:19
  * @LastEditors: etongfu
- * @LastEditTime: 2019-02-18 15:27:57
+ * @LastEditTime: 2019-02-18 15:40:11
  * @Description: dart基础篇
  */
 import 'dart:math';
@@ -229,7 +229,6 @@ class SmartTv extends Television {
 //4.7 mixins:为类添加新的功能
 // Mixins 是一种在多类继承中重用一个类代码的方法。
 // 使用 with 关键字后面为一个或者多个 mixin 名字来使用 mixin。 下面是示例显示了如何使用 mixin：
-
 
 
 // 5：函数  在Dart中 函数是类中定义的方法，是类对象的行为。
