@@ -3,10 +3,11 @@
  * @Email: 13583254085@163.com
  * @Date: 2019-02-15 10:38:19
  * @LastEditors: etongfu
- * @LastEditTime: 2019-02-18 15:40:11
+ * @LastEditTime: 2019-02-19 15:15:30
  * @Description: dart基础篇
  */
 import 'dart:math';
+import 'todo.dart';
 // 1: 声明变量
 // 一种不指定类型声明变量的方式。 大概是有一种类型推断的机制
 // 1.1 变量： 变量是一个引用 下面名字为 name 的变量引用了 一个内容为 dartDemo 的 String 对象。
@@ -264,6 +265,13 @@ class All {
     return totalX + totalY;
   }
 }
+// 4.9 可调用的类
+// 如果 Dart 类实现了 call() 函数则 可以当做方法来调用。
+
+class CallClass {
+  call(String a, String b, String c) => '$a $b $c!';
+}
+
 
 // 5：函数  在Dart中 函数是类中定义的方法，是类对象的行为。
 
@@ -328,14 +336,120 @@ enum Colors {
 /* List<Color> colors = Color.values;
 assert(colors[2] == Color.blue); */
 
-// 7 
+// 7: 泛型
+// Dart中的泛型和大多数语言中的泛形是一样的
+// 如果你希望一个 list 只包含字符串对象，你可以 定义为 List<String> (代表 “list of string”)。
+var names = new List<String>();
+// 另外一个使用泛型的原因是减少重复的代码。 泛型可以在多种类型之间定义同一个实现， 同时还可以继续使用检查模式和静态分析工具提供的代码分析功能
+// 比如你同时要处理数字和字符串 下面这个T是任何我们想要约束的类型 T简单来说就是一个备用类型。这是一个类型占位符
+abstract class Cache<T> {
+  T getByKey(String key);
+  setByKey(String key, T value);
+}
+// 在List和Map中使用泛型 
+// 参数化定义 list 需要在中括号之前 添加 <type> ， 定义 map 需要在大括号之前 添加 <keyType, valueType>。 如果你需要更加安全的类型检查，则可以使用 参数化定义
+var lists = <String>['name', 'id'];
+var maps = <String, String>{
+  "index.html": 'HomePage'
+};
+// 泛形函数
+/* T first(List<T> ts) {
+  T tmp ?= ts[0];
+  return tmp;
+} */
+// 这里的 first (<T>) 泛型可以在如下地方使用 参数 T ：
+/**
+ * 1: 函数的返回值类型 (T).
+ * 2：参数的类型 (List<T>).
+ * 3：局部变量的类型 (T tmp).
+ */
+
+// 8: Dart模块化
+// 使用 import 和 library 指令可以帮助你创建模块化的可分享的代码。库不仅仅提供 API， 还是一个私有单元：以下划线 (_) 开头的标识符只有在库 内部可见。每个 Dart app 都是一个库， 即使没有使用 library 命令也是一个库。
+// 使用 import 来指定一个库如何使用另外 一个库。也可以指定前缀
+/* import 'package:lib1/lib1.dart';
+import 'package:lib2/lib2.dart' as lib2; 
+Element element1 = new Element();           // Uses Element from lib1.
+lib2.Element element2 = new lib2.Element(); // Uses Element from lib2.
+*/
+//　导入部分
+// 仅仅导入foo模块
+/* import 'package:lib1/lib1.dart' show foo;
+// 导入foo以外的全部模块
+import 'package:lib2/lib2.dart' hide foo; */
+
+// 延迟导入(懒加载)
+// Deferred loading (也称之为 lazy loading) 可以让应用在需要的时候再 加载库。 下面是一些使用延迟加载库的场景：
+/**
+ * 1:减少 APP 的启动时间。
+ * 2:执行 A/B 测试，例如 尝试各种算法的 不同实现。
+ * 3:加载很少使用的功能，例如可选的屏幕和对话框。
+ */
+// 但是一些事项还是要注意
+/**
+ * 1:延迟加载库的常量在导入的时候是不可用的。 只有当库加载完毕的时候，库中常量才可以使用
+ * 2:在导入文件的时候无法使用延迟库中的类型。 如果你需要使用类型，则考虑把接口类型移动到另外一个库中， 让两个库都分别导入这个接口库。
+ * 3:Dart 隐含的把 loadLibrary() 函数导入到使用 deferred as 的命名空间 中。 loadLibrary() 方法返回一个 Future。
+ */
+// 先使用deferred as导入
+/* import 'package:deferred/hello.dart' deferred as hello;
+greet() async {
+  // 再使用库标识符调用 loadLibrary() 函数来加载库
+  await hello.loadLibrary(); // 使用 await 关键字暂停代码执行一直到库加载完成   在一个库上你可以多次调用 loadLibrary() 函数
+  hello.printGreeting();
+} */
+// 创建一个库 暂存
+
+// 9 异步支持
+// Dart 有一些语言特性来支持 异步编程。 最常见的特性是 async 方法和 await 表达式。
+// Dart 库中有很多返回 Future 或者 Stream 对象的方法。 这些方法是 异步的： 这些函数在设置完基本的操作 后就返回了， 而无需等待操作执行完成。
+// 有两种方式可以使用 Future 对象中的 数据：1:使用 async 和 await 2: 使用 Future API
+// 从 Stream 中获取数据也有两种 方式：1: 使用 async 和一个 异步 for 循环 (await for) 2:使用 Stream API
 
 
+// 在一个方法上添加 async 关键字，则这个方法返回值为 Future。 例如，下面是一个返回字符串 的同步方法：
+lookUpVersion () async => {'Version': 1.0};
+// 首先声明异步方法 要使用 await，其方法必须带有 async 关键字：
+checkVersion() async {
+ print('I am async methods');
+ var version =await lookUpVersion();
+ print(version);
+}
+// 如果 await 无法正常使用，请确保是在一个 async 方法中。 例如要在 main() 方法中使用 await， 则 main() 方法的函数体必须标记为 async：
 
+// 在循环中使用await for  如果异步 for 循环不能正常工作， 确保是在一个 async 方法中使用，执行流程如下
+/* 
+ *1:等待直到 stream 返回一个数据
+ *2:使用 stream 返回的参数 执行 for 循环代码，
+ *3:重复执行 1 和 2 直到 stream 数据返回完毕。
+ */
+/* await for (var request in requestServer) {
+  handleRequest(request);
+} */
 
+// 10： Metadata（元数据）
+// 使用元数据给你的代码添加其他额外信息。 元数据注解是以 @ 字符开头，后面是一个编译时 常量(例如 deprecated)或者 调用一个常量构造函数。
+// 有三个注解所有的 Dart 代码都可以使用： @deprecated、 @override、 和 @proxy。
+class Deprecated {
+  @deprecated
+  void activate() {
+    turnOn();
+  }
+
+  /// Turns the TV's power on.
+  void turnOn() {
+    print('on!');
+  }
+}
+class SelfMeta {
+  @Todo('seth', 'make this do something')
+  void doSome() {
+    print('使用自定义的meta');
+  }
+}
 
 // 每个应用都需要有个顶级的 main() 入口方法才能执行。 main() 方法的返回值为 void 并且有个可选的 List<String> 参数。
-main(List<String> arguments) {
+main(List<String> arguments) async {
   // 级联调用 .. 语法为 级联调用（cascade）。 使用级联调用语法， 你可以在一个对象上执行多个操作。
   /* querySelector('#sample_text_id')
   ..text = "click me"
@@ -391,6 +505,18 @@ main(List<String> arguments) {
   var allA =All(1,2);
   var allB =All(3,4);
   print(All.totla(allA, allB));
+  // 可调用的类
+  var wf = new CallClass();
+  print(wf("Hi","there,","gang"));
+  // 异步编程
+  try {
+    await checkVersion();
+  } catch (e) {
+    print(e);
+  }
+  // 使用自定义的元数据
+  var selfMeta =new SelfMeta();
+  selfMeta.doSome();
 }
 
 
