@@ -226,10 +226,44 @@ class SmartTv extends Television {
     print('Iam child');
   }
 }
-//4.7 mixins:为类添加新的功能
+//4.7 mixins:为类添加新的功能⭐⭐⭐ ： 实际用途有待考证
 // Mixins 是一种在多类继承中重用一个类代码的方法。
+// 首先创建mixins => 定义一个类，该类没有构造函数，不能调用super。则该类就是个mixin
+abstract class Musicial {
+  bool playPiano =false;
+  bool canFly =false;
+  void activity () {
+    if (playPiano) {
+      print('playing piano');
+    } else {
+      print('No play piano');
+    }
+  }
+}
 // 使用 with 关键字后面为一个或者多个 mixin 名字来使用 mixin。 下面是示例显示了如何使用 mixin：
-
+class Musician extends Television with Musicial {
+  // todo...
+}
+// 4.8 类变量和函数
+// 4.8.1 使用 static 关键字来实现类级别的变量和函数。静态变量对于类级别的状态是 非常有用的：
+class Color {
+  // 静态变量在第一次使用的时候才被初始化。
+  static const red = 'red'; //  静态常量
+  final String name; // 类的实例变量
+  const Color(this.name);
+}
+// 4.8.2 静态函数
+// 静态函数不再类实例上执行， 所以无法访问 this。
+class All {
+  num x;
+  num y;
+  All(this.x, this.y);
+  static num totla (All a, All b) {
+    var totalX = a.x + a.x;
+    var totalY = b.y + b.y;
+    return totalX + totalY;
+  }
+}
 
 // 5：函数  在Dart中 函数是类中定义的方法，是类对象的行为。
 
@@ -299,6 +333,7 @@ assert(colors[2] == Color.blue); */
 
 
 
+
 // 每个应用都需要有个顶级的 main() 入口方法才能执行。 main() 方法的返回值为 void 并且有个可选的 List<String> 参数。
 main(List<String> arguments) {
   // 级联调用 .. 语法为 级联调用（cascade）。 使用级联调用语法， 你可以在一个对象上执行多个操作。
@@ -352,6 +387,10 @@ main(List<String> arguments) {
   // 扩展类
   var smartTv =new SmartTv();
   smartTv.say();
+  // 静态方法
+  var allA =All(1,2);
+  var allB =All(3,4);
+  print(All.totla(allA, allB));
 }
 
 
