@@ -3,11 +3,12 @@
  * @Email: 13583254085@163.com
  * @Date: 2019-02-15 10:38:19
  * @LastEditors: etongfu
- * @LastEditTime: 2019-02-19 15:15:30
+ * @LastEditTime: 2019-02-20 11:02:38
  * @Description: dart基础篇
  */
 import 'dart:math';
 import 'todo.dart';
+
 // 1: 声明变量
 // 一种不指定类型声明变量的方式。 大概是有一种类型推断的机制
 // 1.1 变量： 变量是一个引用 下面名字为 name 的变量引用了 一个内容为 dartDemo 的 String 对象。
@@ -51,6 +52,11 @@ var map = {
   'fifth' : 'golden rings'
 };
 // 1.4.6 Symbols 一个 Symbol object 代表 Dart 程序中声明的操作符或者标识符
+
+// 1.5 Sets Dart 中的 Set 是一个无序集合，里面不能保护重复的数据。 由于是无序的，所以无法通过索引来从 set 中获取数据：
+var sets =new Set().addAll(['a','b']);
+
+
 
 // 2：Functions Dart 是一个真正的面向对象语言，方法也是对象并且具有一种 类型， Function。 这意味着，方法可以赋值给变量，也可以当做其他方法的参数。 也可以把 Dart 类的实例当做方法来调用
 
@@ -448,8 +454,13 @@ class SelfMeta {
   }
 }
 
+// 11：Dates and times
+// DateTime 对象代表某个时刻。时区是 UTC 或者 本地时区。
+var now = new DateTime.now();
+
 // 每个应用都需要有个顶级的 main() 入口方法才能执行。 main() 方法的返回值为 void 并且有个可选的 List<String> 参数。
 main(List<String> arguments) async {
+  print(now);
   // 级联调用 .. 语法为 级联调用（cascade）。 使用级联调用语法， 你可以在一个对象上执行多个操作。
   /* querySelector('#sample_text_id')
   ..text = "click me"
