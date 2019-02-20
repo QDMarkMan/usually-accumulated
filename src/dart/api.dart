@@ -5,7 +5,7 @@
  * @Description: Dart库预览
  * @youWant: add you want info here
  * @Date: 2019-02-20 09:49:42
- * @LastEditTime: 2019-02-20 11:18:45
+ * @LastEditTime: 2019-02-20 11:26:30
  */
 /* import 'dart:html';
 var url = 'http://iats.ronganfarm.com/iats/login/doLogin';
@@ -30,6 +30,7 @@ main(List<String> args) async {
   print(str.startsWith('this'));
   print(str.endsWith('core'));
   print(str.indexOf('dart'));
+  
   //　在字符串中提取数据
   var subStr =str.substring(0,4); // 同样的包括开始不包括结束 而且不会修改源对象
   print(subStr);
