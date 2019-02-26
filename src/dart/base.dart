@@ -3,7 +3,7 @@
  * @Email: 13583254085@163.com
  * @Date: 2019-02-15 10:38:19
  * @LastEditors: etongfu
- * @LastEditTime: 2019-02-20 11:02:38
+ * @LastEditTime: 2019-02-21 10:25:23
  * @Description: dart基础篇
  */
 import 'dart:math';
@@ -458,6 +458,26 @@ class SelfMeta {
 // DateTime 对象代表某个时刻。时区是 UTC 或者 本地时区。
 var now = new DateTime.now();
 
+// 12  Typedefs
+// 在 Dart 语言中，方法也是对象。 使用 typedef, 或者 function-type alias 来为方法类型命名， 然后可以使用命名的方法。 当把方法类型赋值给一个变量的时候，typedef 保留类型信息。
+// 没有使用typedef的代码是这样的
+class SortedCollection {
+  Function compare;
+  SortedCollection (int f(Object a, Object b)) {
+    compare = f;
+  }
+}
+// 定义函数 
+int sort(Object a, Object b) => 0;
+// 当把 f 赋值给 compare 的时候， 类型信息丢失了。 f 的类型是 (Object, Object) → int (这里 → 代表返回值类型)， 当然该类型是一个 Function。如果我们使用显式的名字并保留类型信息， 开发者和工具可以使用 这些信息：
+//使用typedef  注意： 目前，typedefs 只能使用在 function 类型上，但是将来 可能会有变化。
+typedef int Compare(Object a, Object b);
+class TypeColl {
+  Compare compare;
+  TypeColl(this.compare);
+}
+
+
 // 每个应用都需要有个顶级的 main() 入口方法才能执行。 main() 方法的返回值为 void 并且有个可选的 List<String> 参数。
 main(List<String> arguments) async {
   print(now);
@@ -528,6 +548,12 @@ main(List<String> arguments) async {
   // 使用自定义的元数据
   var selfMeta =new SelfMeta();
   selfMeta.doSome();
+  // typedef
+  SortedCollection coll =new SortedCollection(sort);
+  print(coll.compare is Function);
+  TypeColl typeColl =new TypeColl(sort);
+  print(typeColl.compare is Function);
+  print(typeColl.compare is Compare);
 }
 
 

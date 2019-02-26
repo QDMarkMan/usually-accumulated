@@ -3,7 +3,7 @@
  * @Email: 13583254085@163.com
  * @Date: 2019-01-25 14:53:35
  * @LastEditors: etongfu
- * @LastEditTime: 2019-01-25 15:07:46
+ * @LastEditTime: 2019-02-25 17:37:45
  * @Description: 简易版Promise实现
  * @youWant: add you want info here
  */
@@ -64,7 +64,6 @@ let easePromoise = new EasePromise((reslove, reject) => {
   }, 1000)
 })
 easePromoise.then((result) => {
-  debugger
   console.log(result)
 }, (err) => {
   console.error(error)
