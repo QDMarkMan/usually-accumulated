@@ -723,13 +723,13 @@ const keysReflect = {
 console.log(Reflect.ownKeys(keysReflect)) // ["key", Symbol(key)]
 
 // Decorator
-@testable
-class MyTestableClass {
-  // ...
-}
-function testable(target) {
-  target.isTestable = true;
-  console.log(`call Decorator`)
-}
+// @testable
+// class MyTestableClass {
+//   // ...
+// }
+// function testable(target) {
+//   target.isTestable = true;
+//   console.log(`call Decorator`)
+// }
 console.log(MyTestableClass.isTestable)// true
 console.warn('ES6中新API专题结束')
