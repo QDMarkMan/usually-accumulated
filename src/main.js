@@ -8,8 +8,8 @@ import '@/func_width_obj.js'// 闭包简单demo
 import '@/class.js'// 闭包简单demo
 import '@/ease_promise' // 简单promise
 import './vue/responsive'
+import './design-partterns/index'
 
 import 'TS'
-import 'API'
+// import 'API'
 import 'CSS' // 
-
