@@ -64,3 +64,58 @@ context.doSomeLogic()
 // update strategy
 context.setStrategy(new AddStrategy())
 context.doSomeLogic()
+
+// ================================== 参数校验 ================================== //
+interface Validator {
+  doValidator () :boolean
+}
+
+interface ValidatorEntity {
+  key: string,
+  validators: Validator[],
+  msg: String
+}
+
+class ValidatorContext {
+  private entityList: ValidatorEntity[] = []
+
+  /**
+   * validators
+   */
+  public add(key: string, validators: Validator[], msg: string) {
+    (!this.hasEntity(key)) && this.entityList.push({
+      key,
+      validators,
+      msg
+    })
+  }
+  /**
+   * hasEntity
+   */
+  public hasEntity(key: string): boolean {
+    return this.entityList.some((entity: ValidatorEntity) => entity.key === key)
+  }
+
+  /**
+   * runEntity
+   */
+  public runValidator() {
+    const len = this.entityList.length
+    if (len > 0) {
+      for (const value of this.entityList) {
+        this.runEntity(value)
+      }
+    }
+  }
+
+  private runEntity(entity: ValidatorEntity): boolean {
+    if (entity.validators.length > 0) {
+      const values = entity.validators
+      for (const value of values) {
+        // if (!value.doValidator())
+      }
+    } else {
+      return false
+    }
+  }
+}
