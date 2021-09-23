@@ -51,3 +51,15 @@ basketSetEmpty = set() # 创建空集合只能用set构造函数
 knights = {'gallahad': 'the pure', 'robin': 'the brave'}
 
 # 循环技巧
+
+for k,v in knights.items():
+    print(k, v)
+
+for k, v in enumerate(['tic', 'tac', 'toe']):
+  print("enumerate", k, v)
+
+questions = ['name', 'quest', 'favorite color']
+answers =  ['lancelot', 'the holy grail', 'blue']
+
+for q, a in zip(questions, answers):
+  print("zip", q, a)
