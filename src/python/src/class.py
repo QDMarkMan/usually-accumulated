@@ -62,3 +62,4 @@ print(w1.purpose, w1.region)
 
 w2 = Warehouse()
 print(w2.purpose, w2.region)
+
