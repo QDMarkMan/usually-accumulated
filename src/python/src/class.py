@@ -63,3 +63,32 @@ print(w1.purpose, w1.region)
 w2 = Warehouse()
 print(w2.purpose, w2.region)
 
+class Battery:
+    def __init__(self, size):
+      self.size = size
+# 继承
+class Car:
+    def __init__(self, model):
+      self.model = model
+    
+    def fill_gas_tank(self):
+      print("Car gas tank is filled")
+        
+# Electron car 继承Car 要在括号中表示出来
+class ElectronCar(Car):
+    def __init__(self, *args):
+      # super()是一个特殊函数，让你能够调用父类的方法。这行代码让Python调用Car类的方法__init__()，让ElectricCar实例包含这个方法中定义的所有属性。
+      super().__init__(*args)
+      # 将实例用作属性
+      self.battery = Battery(500) 
+
+    def charge(self):
+      print(f'Electron car {self.model} is charging now')
+
+    # 重写/覆盖父类方法
+    def fill_gas_tank(self):
+      print("Electron Car has no gas tank")
+
+electronCar = ElectronCar("tesla")
+electronCar.charge()
+electronCar.fill_gas_tank()
