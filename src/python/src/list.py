@@ -32,3 +32,9 @@ if 0 in list3:
   
 list3.pop() # 不提供参数会默认删除最后一个
 print(list3)
+
+list.sort()
+print(list)
+# sorted函数返回列表排序后的拷贝不会修改传入的列表， 函数的设计就应该像sorted函数一样尽可能不产生副作用
+list4 = sorted(list3)
+print(list4)
