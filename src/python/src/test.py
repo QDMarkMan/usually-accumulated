@@ -17,7 +17,10 @@ def marquee_show():
 # marquee_show()
 
 # 2: 设计一个函数产生指定长度的验证码，验证码由大小写字母和数字构成。
+def random_sms_code(length = 4):
+ print('radom_sms_code', length)
 
+random_sms_code()
 # 3: 设计一个函数返回给定文件名的后缀名。
 
 # 4: 设计一个函数返回传入的列表中最大和第二大的元素的值。
