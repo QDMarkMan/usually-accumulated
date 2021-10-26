@@ -1,5 +1,12 @@
-# Python 中的类
-# Doc https://docs.python.org/zh-cn/3/tutorial/classes.html
+"""
+**************************************************************************
+*  @Copyright 2021 Tongfu.E.
+*  @Date [2021-10-26 09:25:01].
+*  @Description # Python 中的类
+*  @Document https://docs.python.org/zh-cn/3/tutorial/classes.html.
+**************************************************************************
+"""
+
 
 # 作用域和命名空间
 
@@ -92,3 +99,61 @@ class ElectronCar(Car):
 electronCar = ElectronCar("tesla")
 electronCar.charge()
 electronCar.fill_gas_tank()
+
+
+# 面向对象进阶
+
+# 私有属性
+class Student(object):
+  def __init__(self, name, age, gender):
+    self.name = name
+    self.age = age
+    self.__gender = gender
+
+  def study(self, souse_name):
+    print('%s正在学习%s.' % (self.name, course_name))
+
+student = Student("mark", 18, 'female')
+
+# print(student.__gender)
+
+# @property包装器来包装getter和setter方法
+
+class Person(object):
+
+    #  Python是一门动态语言。通常，动态语言允许我们在程序运行时给对象绑定新的属性或方法。 使用__slots__可以限定Person对象只能绑定指定属性
+
+    __slots__ = ('_name', '_age', '_gender')
+
+    def __init__(self, name, age):
+        self._name = name
+        self._age = age
+    
+    # 访问器
+    @property
+    def name(self):
+      return self._name 
+
+    @property
+    def age(self):
+       return self._age
+
+    @age.setter
+    def age(self, age):
+      self._age = age
+
+    def play(self):
+      if self._age <= 16:
+          print('%s正在玩飞行棋.' % self._name)
+      else:
+          print('%s正在玩斗地主.' % self._name)
+
+person = Person('Net', 20)
+
+print(person.name)
+person.age = 21
+print(person.age)
+person._gender = 'male'
+print(person._gender)
+# person._is_gay = False
+# print(person._is_gay)

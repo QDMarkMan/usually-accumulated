@@ -1,6 +1,11 @@
 """
-练习题专题
+**************************************************************************
+*  @Copyright 2021 Tongfu.E.
+*  @Date [2021-10-25 10:08:04].
+*  @Description 数组等容器练习题.
+**************************************************************************
 """
+
 import os
 import time
 import random
@@ -14,7 +19,6 @@ def marquee_show():
       time.sleep(0.2)
       # 持续的修改字符串
       content = content[1:] + content[0] 
-
 # marquee_show()
 
 # 2: 设计一个函数产生指定长度的验证码，验证码由大小写字母和数字构成。
@@ -33,6 +37,7 @@ def get_file_suffix(filename):
   print('get_file_suffix', filename)
 
 get_file_suffix('abc.sdf')
+
 
 # 4: 设计一个函数返回传入的列表中最大和第二大的元素的值。
 
