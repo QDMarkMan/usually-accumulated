@@ -128,7 +128,7 @@ class Person(object):
     def __init__(self, name, age):
         self._name = name
         self._age = age
-    
+
     # 访问器
     @property
     def name(self):
@@ -147,6 +147,15 @@ class Person(object):
           print('%s正在玩飞行棋.' % self._name)
       else:
           print('%s正在玩斗地主.' % self._name)
+    
+    @staticmethod
+    def say(words = ''):
+      print(f'Person say {words}')
+
+    @classmethod
+    def leader(cls):
+      return cls('leader', 10000)
+
 
 person = Person('Net', 20)
 
@@ -155,5 +164,8 @@ person.age = 21
 print(person.age)
 person._gender = 'male'
 print(person._gender)
+Person.say('static meethod')
+leader = Person.leader()
+print(leader.name)
 # person._is_gay = False
 # print(person._is_gay)
