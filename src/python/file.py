@@ -11,7 +11,30 @@ def main():
   print(f.read())
   f.close()
 
+
+def read_demo():
+  f = None;
+  try:
+    with open('./readme.md', 'r') as f:
+      lines = f.readlines()
+      print(lines)
+  except FileNotFoundError:
+    print('FileNotFoundError!')
+  except LookupError:
+    print('指定了未知编码')
+  except UnicodeDecodeError:
+    print('读取文件解码错误')
+  finally:
+    if f:
+      f.close()
+
+read_demo()
+
+# 按照行进行读取
+
+
 if __name__ == '__main__':
     main()
     
+
 
