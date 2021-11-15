@@ -23,12 +23,42 @@ list3 = list(map(mapMethod, list1))
 print(list3)
 
 # next
-
+# 通过调用 iterator 的 __next__() 方法获取下一个元素。如果迭代器耗尽，则返回给定的 default，如果没有默认值则触发 StopIteration。
+# next(iterator, default)
+marks = [65, 71, 68, 74, 61]
+# convert list to iterator
+marks_iter = iter(marks)
+marks1 = next(marks_iter)
+print('next', marks1)
+marks2 = next(marks_iter)
+print('next2', marks2)
 
 # open
+# open(file, mode='r', buffering=- 1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+# 打开 file 并返回对应的 file object。 如果该文件不能被打开，则引发 OSError。 请参阅 读写文件 获取此函数的更多用法示例。
 
 # reversed
+# 返回一个反向的 iterator。 seq 必须是一个具有 __reversed__() 方法的对象或者是支持该序列协议（具有从 0 开始的整数类型参数的 __len__() 方法和 __getitem__() 方法）。
+
+# string
+seq_string= 'Python'
+print('seq_string', list(reversed(seq_string)))
+
+# tuple
+seq_tuple = ('P', 'y', 't', 'h', 'o', 'n')
+print('seq_tuple', list(reversed(seq_tuple)))
+
+# range
+seq_range =range(5, 9)
+print('seq_range', list(reversed(seq_range)))
+
+# list
+seq_list = [1, 2, 3, 4,5]
+print('seq_list', list(reversed(seq_list)))
 
 # sum
 
 # zip
+
+# list
+# class list([iterable])  虽然被称为函数，list 实际上是一种可变序列类型
