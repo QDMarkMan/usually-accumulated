@@ -14,12 +14,12 @@ import 'todo.dart';
 // 1.1 变量： 变量是一个引用 下面名字为 name 的变量引用了 一个内容为 dartDemo 的 String 对象。
 var name = "dartDemo";
 // 1.2 没有初始化值的变量会自动获取一个null的的默认值
-int count;
+int count = 0;
 // 1.3 Final and const 一个 final 变量只能赋值一次；一个 const 变量是编译时常量。 （Const 变量同时也是 final 变量。） 顶级的 final 变量或者类中的 final 变量在 第一次使用的时候初始化。
 // 注意： 实例变量可以为 final 但是不能是 const 。 const比较好用  它可以创建任何数据类型的数据结构
 final finalStr = 'finalStr';
 // finalStr = 'name'; //  Uncommenting this causes an error
-const arrConsts = const []; 
+const arrConsts = const [];
 // 1.4 Built-in types(内置的类型)
 /*
 Dart 具有以下的内置类型
@@ -40,40 +40,41 @@ String typeName = 'String type';
 // 1.4.3  Boolean
 bool boolType = false;
 // 1.4.4 List  在 Dart 中数组就是 List 对象。所以 通常我们都称之为 lists。
-var list = [1,2,3];
+var list = [1, 2, 3];
 // 定义不变的数组
-const constList = const [1,2,3,4];
+const constList = const [1, 2, 3, 4];
 // 1.4.5 Maps Map 是一个键值对相关的对象。 键和值可以是任何类型的对象。每个 键 只出现一次， 而一个值则可以出现多次。Dart 通过 map 字面量 和 Map 类型支持 map。
 // 创建maps
 var map = {
   // Keys      Values
-  'first' : 'partridge',
+  'first': 'partridge',
   'second': 'turtledoves',
-  'fifth' : 'golden rings'
+  'fifth': 'golden rings'
 };
 // 1.4.6 Symbols 一个 Symbol object 代表 Dart 程序中声明的操作符或者标识符
 
 // 1.5 Sets Dart 中的 Set 是一个无序集合，里面不能保护重复的数据。 由于是无序的，所以无法通过索引来从 set 中获取数据：
-var sets =new Set().addAll(['a','b']);
-
-
+var sets = new Set().addAll(['a', 'b']);
 
 // 2：Functions Dart 是一个真正的面向对象语言，方法也是对象并且具有一种 类型， Function。 这意味着，方法可以赋值给变量，也可以当做其他方法的参数。 也可以把 Dart 类的实例当做方法来调用
 
 // 定义一个返回静态的方法
-void printString (String str) {
+void printString(String str) {
   print('file name is $str');
 }
+
 // 定义一个有返回值的方法
-bool isNoble (int atomicNumber) {
+bool isNoble(int atomicNumber) {
   return atomicNumber > 5;
 }
+
 // 可选的参数[String old]
-String say(String first, String last,  [String old]) {
+String say(String first, String last, [String old]) {
   return first + last + old;
 }
+
 // 参数默认值 默认的参数一般其他语言的传参差别不大
-void defaultValue ({bool bold = false, bool hidden = false}) {
+void defaultValue({bool bold = false, bool hidden = false}) {
   print('default bold is $bold');
   print('default hidden is $hidden');
 }
@@ -83,9 +84,8 @@ void defaultValue ({bool bold = false, bool hidden = false}) {
 // Lexical closures（词法闭包）
 // 一个 闭包 是一个方法对象，不管该对象在何处被调用， 该对象都可以访问其作用域内 的变量。
 Function makeAdder(num addBy) {
-  return (num i ) => addBy + i;
+  return (num i) => addBy + i;
 }
-
 
 // 3 条件表达式
 // Dart 有两个特殊的操作符可以用来替代 if-else 语句：
@@ -129,14 +129,15 @@ class Point {
    */
   // 3： 命名构造函数
   // 注意：构造函数不能继承，所以超类的命名构造函数 也不会被继承。如果你希望 子类也有超类一样的命名构造函数， 你必须在子类中自己实现该构造函数。
-  Point.fromJSON (Map json) {
+  Point.fromJSON(Map json) {
     print('1:父类point中的命名构造函数');
-    x =json['x'];
-    y =json['y'];
+    x = json['x'];
+    y = json['y'];
   }
 }
+
 class PointChild extends Point {
-  PointChild.fromJSON(Map data):super.fromJSON(data) {
+  PointChild.fromJSON(Map data) : super.fromJSON(data) {
     print('子类中的构造函数');
     print('2: Point 没有默认的构造器，你必须调用super的fromJSON');
   }
@@ -150,14 +151,16 @@ class Redirect {
   // 有时候一个构造函数会调动类中的其他构造函数。 一个重定向构造函数是没有代码的，在构造函数声明后，使用 冒号调用其他构造函数。
   Redirect.alongXAxis(num x) : this(x, 0);
 }
-//4.3 常量构造函数 
+
+//4.3 常量构造函数
 // 如果你的类提供一个状态不变的对象，你可以把这些对象定义为编译时常量。要实现这个功能，需要定义一个 const 构造函数， 并且声明所有类的变量为 final。
 class ImmutableClass {
   final num x;
   final num y;
-  const ImmutableClass (this.x, this.y);
+  const ImmutableClass(this.x, this.y);
   static final ImmutableClass origin = const ImmutableClass(0, 0);
 }
+
 //4.4 工厂方法构造函数
 // 如果一个构造函数并不总是返回一个新的对象，则使用 factory 来定义 这个构造函数。例如，一个工厂构造函数 可能从缓存中获取一个实例并返回，或者 返回一个子类型的实例。
 class Logger {
@@ -176,13 +179,14 @@ class Logger {
   }
   // 具名的构造函数
   Logger._internal(this.name);
-  
-  void log (String msg) {
+
+  void log(String msg) {
     if (!mute) {
       print(msg);
     }
   }
 }
+
 //4.5 隐式接口
 //  每个类都隐式的定义了一个包含所有实例成员的接口， 并且这个类实现了这个接口。如果你想创建类 A 来支持 类 B 的 api，而不想继承 B 的实现， 则类 A 应该实现 B 的接口。
 class Person {
@@ -191,19 +195,22 @@ class Person {
   void Say() {
     print('Person say');
   }
+
   String greet(who) => 'Hi $who. Person?';
 }
+
 class Child implements Person {
   // 必须要定义这个变量
   final _name = "";
   void Say() {
     print('Person say');
   }
+
   String greet(who) => 'Hi $who. Do you know who I am?';
 }
 
 greetBoy(Person person) {
-  return person.greet(person._name == '' ? 'default': person._name);
+  return person.greet(person._name == '' ? 'default' : person._name);
 }
 // 实现多个接口
 /* class Mutiple implements Redirect, Person {
@@ -212,14 +219,16 @@ greetBoy(Person person) {
 
 // 4.6 扩展类 使用 extends 定义子类， supper 引用 超类：
 
-class Television{
-  void say () {
+class Television {
+  void say() {
     print('Iam father');
   }
-  void defaultMethod () {
+
+  void defaultMethod() {
     print('Iam default');
   }
 }
+
 class SmartTv extends Television {
   // 可以使用 @override 注解来表明你的函数是想覆写超类的一个函数：
   @override
@@ -227,19 +236,21 @@ class SmartTv extends Television {
     // ...
     print('I am child default');
   }
-  // 子类可以通过super来调用父类。 子类可以覆写实例函数，getter 和 setter。 
-  void say () {
+
+  // 子类可以通过super来调用父类。 子类可以覆写实例函数，getter 和 setter。
+  void say() {
     super.say();
     print('Iam child');
   }
 }
+
 //4.7 mixins:为类添加新的功能⭐⭐⭐ ： 实际用途有待考证
 // Mixins 是一种在多类继承中重用一个类代码的方法。
 // 首先创建mixins => 定义一个类，该类没有构造函数，不能调用super。则该类就是个mixin
 abstract class Musicial {
-  bool playPiano =false;
-  bool canFly =false;
-  void activity () {
+  bool playPiano = false;
+  bool canFly = false;
+  void activity() {
     if (playPiano) {
       print('playing piano');
     } else {
@@ -247,10 +258,12 @@ abstract class Musicial {
     }
   }
 }
+
 // 使用 with 关键字后面为一个或者多个 mixin 名字来使用 mixin。 下面是示例显示了如何使用 mixin：
 class Musician extends Television with Musicial {
   // todo...
 }
+
 // 4.8 类变量和函数
 // 4.8.1 使用 static 关键字来实现类级别的变量和函数。静态变量对于类级别的状态是 非常有用的：
 class Color {
@@ -259,13 +272,14 @@ class Color {
   final String name; // 类的实例变量
   const Color(this.name);
 }
+
 // 4.8.2 静态函数
 // 静态函数不再类实例上执行， 所以无法访问 this。
 class All {
   num x;
   num y;
   All(this.x, this.y);
-  static num totla (All a, All b) {
+  static num totla(All a, All b) {
     var totalX = a.x + a.x;
     var totalY = b.y + b.y;
     return totalX + totalY;
@@ -278,7 +292,6 @@ class CallClass {
   call(String a, String b, String c) => '$a $b $c!';
 }
 
-
 // 5：函数  在Dart中 函数是类中定义的方法，是类对象的行为。
 
 // 5.1 实例函数
@@ -286,18 +299,19 @@ class CallClass {
 class MathPoint {
   num a;
   num b;
-  
+
   MathPoint(this.a, this.b);
 
   num distance(MathPoint point) {
     final num da = a - point.a;
     final num db = b - point.b;
-    return sqrt(da*da + db*db);
+    return sqrt(da * da + db * db);
   }
 }
+
 // 5.2 Getters and setters
 // Getters 和 setters 是用来设置和访问对象属性的特殊函数。每个实例变量都隐含的具有一个 getter， 如果变量不是 final 的则还有一个 setter。 你可以通过实行 getter 和 setter 来创建新的属性， 使用 get 和 set 关键字定义 getter 和 setter。基本和js中的是一样。
-class Rectangle  {
+class Rectangle {
   num left;
   num top;
   num width;
@@ -305,9 +319,9 @@ class Rectangle  {
   Rectangle(this.left, this.top, this.width, this.height);
   // getter 和 setter 的好处是，你可以开始使用实例变量，后来 你可以把实例变量用函数包裹起来，而调用你代码的地方不需要修改。
   num get right => left + width;
-  set right(num value) => left =value - width;
+  set right(num value) => left = value - width;
   num get bottom => top + height;
-  set bottom(num value) => top =value - height;
+  set bottom(num value) => top = value - height;
 }
 // 5.3抽象函数 / 抽象类
 // 抽象类 使用 abstract 修饰符定义一个 抽象类—一个不能被实例化的类。 抽象类通常用来定义接口， 以及部分实现。如果你希望你的抽象类 是可实例化的，则定义一个 工厂 构造函数。抽象类通常具有 抽象函数
@@ -317,9 +331,10 @@ abstract class AbstractClass {
   // 抽象函数
   void doSome();
 }
+
 class Instance extends AbstractClass {
   // 如果调用一个没实现的抽象函数会导致运行时异常。
-  void doSome () {
+  void doSome() {
     print("我是子类中实现的抽象函数");
   }
 }
@@ -331,11 +346,7 @@ class Instance extends AbstractClass {
  * 1:无法继承枚举类型、无法使用 mix in、无法实现一个枚举类型
  * 2:无法显示的初始化一个枚举类型
  */
-enum Colors {
-  red,
-  green,
-  blue
-}
+enum Colors { red, green, blue }
 // 6.1 枚举类型中的每个值都有一个 index getter 函数， 该函数返回该值在枚举类型定义中的位置（从 0 开始）。 例如，第一个枚举值的位置为 0， 第二个为 1.
 // assert(Color.red.index == 0);
 // 6.2 枚举的 values 常量可以返回 所有的枚举值
@@ -345,19 +356,19 @@ assert(colors[2] == Color.blue); */
 // 7: 泛型
 // Dart中的泛型和大多数语言中的泛形是一样的
 // 如果你希望一个 list 只包含字符串对象，你可以 定义为 List<String> (代表 “list of string”)。
-var names = new List<String>();
+var names = <String>[];
+
 // 另外一个使用泛型的原因是减少重复的代码。 泛型可以在多种类型之间定义同一个实现， 同时还可以继续使用检查模式和静态分析工具提供的代码分析功能
 // 比如你同时要处理数字和字符串 下面这个T是任何我们想要约束的类型 T简单来说就是一个备用类型。这是一个类型占位符
 abstract class Cache<T> {
   T getByKey(String key);
   setByKey(String key, T value);
 }
-// 在List和Map中使用泛型 
+
+// 在List和Map中使用泛型
 // 参数化定义 list 需要在中括号之前 添加 <type> ， 定义 map 需要在大括号之前 添加 <keyType, valueType>。 如果你需要更加安全的类型检查，则可以使用 参数化定义
 var lists = <String>['name', 'id'];
-var maps = <String, String>{
-  "index.html": 'HomePage'
-};
+var maps = <String, String>{"index.html": 'HomePage'};
 // 泛形函数
 /* T first(List<T> ts) {
   T tmp ?= ts[0];
@@ -412,14 +423,13 @@ greet() async {
 // 有两种方式可以使用 Future 对象中的 数据：1:使用 async 和 await 2: 使用 Future API
 // 从 Stream 中获取数据也有两种 方式：1: 使用 async 和一个 异步 for 循环 (await for) 2:使用 Stream API
 
-
 // 在一个方法上添加 async 关键字，则这个方法返回值为 Future。 例如，下面是一个返回字符串 的同步方法：
-lookUpVersion () async => {'Version': 1.0};
+lookUpVersion() async => {'Version': 1.0};
 // 首先声明异步方法 要使用 await，其方法必须带有 async 关键字：
 checkVersion() async {
- print('I am async methods');
- var version =await lookUpVersion();
- print(version);
+  print('I am async methods');
+  var version = await lookUpVersion();
+  print(version);
 }
 // 如果 await 无法正常使用，请确保是在一个 async 方法中。 例如要在 main() 方法中使用 await， 则 main() 方法的函数体必须标记为 async：
 
@@ -447,6 +457,7 @@ class Deprecated {
     print('on!');
   }
 }
+
 class SelfMeta {
   @Todo('seth', 'make this do something')
   void doSome() {
@@ -463,20 +474,21 @@ var now = new DateTime.now();
 // 没有使用typedef的代码是这样的
 class SortedCollection {
   Function compare;
-  SortedCollection (int f(Object a, Object b)) {
+  SortedCollection(int f(Object a, Object b)) {
     compare = f;
   }
 }
-// 定义函数 
+
+// 定义函数
 int sort(Object a, Object b) => 0;
 // 当把 f 赋值给 compare 的时候， 类型信息丢失了。 f 的类型是 (Object, Object) → int (这里 → 代表返回值类型)， 当然该类型是一个 Function。如果我们使用显式的名字并保留类型信息， 开发者和工具可以使用 这些信息：
 //使用typedef  注意： 目前，typedefs 只能使用在 function 类型上，但是将来 可能会有变化。
 typedef int Compare(Object a, Object b);
+
 class TypeColl {
   Compare compare;
   TypeColl(this.compare);
 }
-
 
 // 每个应用都需要有个顶级的 main() 入口方法才能执行。 main() 方法的返回值为 void 并且有个可选的 List<String> 参数。
 main(List<String> arguments) async {
@@ -491,7 +503,7 @@ main(List<String> arguments) async {
   printString(name);
   printString(typeName);
   print(count);
-  
+
   print(intNum);
   print(douNum);
 
@@ -512,33 +524,30 @@ main(List<String> arguments) async {
 
   print(add2(2));
   print(add3(3));
-  var jsonMap = {
-    'x': 1,
-    'y':2
-  };
+  var jsonMap = {'x': 1, 'y': 2};
   // class中内容
-  var point =new PointChild.fromJSON(jsonMap);
+  var point = new PointChild.fromJSON(jsonMap);
   print(point); // Instance of 'PointChild'
 
   //setter 和getter
   var rect = new Rectangle(3, 33, 11, 12);
   print('我是rect中的getter设置的值${rect.right}');
-  
-  var ins =new Instance();
+
+  var ins = new Instance();
   ins.doSome();
   // 隐式接口
   print(greetBoy(new Person('kathy')));
   print(greetBoy(new Child()));
   // 扩展类
-  var smartTv =new SmartTv();
+  var smartTv = new SmartTv();
   smartTv.say();
   // 静态方法
-  var allA =All(1,2);
-  var allB =All(3,4);
+  var allA = All(1, 2);
+  var allB = All(3, 4);
   print(All.totla(allA, allB));
   // 可调用的类
   var wf = new CallClass();
-  print(wf("Hi","there,","gang"));
+  print(wf("Hi", "there,", "gang"));
   // 异步编程
   try {
     await checkVersion();
@@ -546,14 +555,12 @@ main(List<String> arguments) async {
     print(e);
   }
   // 使用自定义的元数据
-  var selfMeta =new SelfMeta();
+  var selfMeta = new SelfMeta();
   selfMeta.doSome();
   // typedef
-  SortedCollection coll =new SortedCollection(sort);
+  SortedCollection coll = new SortedCollection(sort);
   print(coll.compare is Function);
-  TypeColl typeColl =new TypeColl(sort);
+  TypeColl typeColl = new TypeColl(sort);
   print(typeColl.compare is Function);
   print(typeColl.compare is Compare);
 }
-
-
