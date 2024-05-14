@@ -1,0 +1,72 @@
+/** ---------------------------------------------------------------------------------------------
+ *  @Author [Tongfu.E].
+ *  @Email [etongfu@outlook.com].
+ *  @Date [2024-05-14 10:59:11].
+ *  @Des [Grid样式].
+ *-------------------------------------------------------------------------------------------- */
+.grid-wrapper {
+  height: 400px;
+  width: 100%;
+  border: 1px silver solid;
+  background-color: #f3f3f3;
+
+  display: grid;
+  grid-template-columns: 100px 200px 100px;
+  grid-gap: 10px;
+  grid-auto-rows: 50px;
+  justify-items: start;
+}
+
+.grid-area {
+  margin-top: 20px;
+  height: 400px;
+  width: 100%;
+  border: 1px silver solid;
+  background-color: #f3f3f3;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-template-areas:
+    "logo header header"
+    "sidebar content .";
+    
+  .sidebar {
+    grid-area: sidebar; 
+  }
+  .header {
+    grid-area: header; 
+  }
+  .logo {
+    grid-area: logo; 
+  }
+  .content {
+    grid-area: content; 
+  }
+}
+
+// ------------------------------ 测试 ------------------------------ //
+
+.one {
+  background: #19CAAD;
+}
+.two { 
+  background: #8CC7B5;
+}
+.three {
+  background: #D1BA74;
+}
+.four {
+  background: #BEE7E9;
+}
+.five {
+  background: #E6CEAC;
+}
+.six {
+  background: #ECAD9E;
+}
+.item {
+  text-align: center;
+  font-size: 200%;
+  color: #fff;
+}
